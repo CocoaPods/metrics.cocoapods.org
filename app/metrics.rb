@@ -1,6 +1,4 @@
-class Metrics < Sequel::Model
-  self.dataset = :metrics
-
+class Metrics < Sequel::Model(:metrics)
   plugin :timestamps
 
   one_to_one :pod
