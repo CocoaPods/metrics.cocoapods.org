@@ -1,4 +1,4 @@
-api.cocoapods.org
-=================
+metrics.cocoapods.org
+=====================
 
-The API for CocoaPods
+Metrics calculations & Metrics API for CocoaPods.
