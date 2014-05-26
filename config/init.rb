@@ -27,7 +27,7 @@ require 'json/ext'
 require 'logger'
 require 'fileutils'
 
-if ENV['TRUNK_APP_LOG_TO_STDOUT']
+if ENV['METRICS_APP_LOG_TO_STDOUT']
   STDOUT.sync = true
   STDERR.sync = true
   TRUNK_APP_LOGGER = Logger.new(STDOUT)

@@ -40,7 +40,7 @@ begin
 
     desc 'Run migrations'
     task :migrate => :rack_env do
-      ENV['TRUNK_APP_LOG_TO_STDOUT'] = 'true'
+      ENV['METRICS_APP_LOG_TO_STDOUT'] = 'true'
       Rake::Task[:env].invoke
       version = ENV['VERSION'].to_i if ENV['VERSION']
       Sequel::Migrator.run(DB, File.join(ROOT, 'db/migrations'), :target => version)
