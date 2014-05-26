@@ -1,12 +1,24 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
 
+# gem 'activesupport'
+gem 'cocoapods-core' #, :git => 'https://github.com/CocoaPods/Core.git'
+gem 'json', '~> 1.8'
+# gem 'nap', :git => 'https://github.com/alloy/nap.git', :branch => 'error'
+gem 'pg'
+gem 'sequel'
+gem 'sinatra'
+gem 'slim', '< 2.0'
+gem 'sass'
+
 group :rake do
   gem 'rake'
+  gem 'terminal-table'
 end
 
 group :development do
   gem 'kicker'
+  gem 'sinatra-contrib'
 end
 
 group :development, :production do
