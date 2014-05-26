@@ -6,6 +6,7 @@ Sequel.migration do
   change do
     create_table(:metrics) do
       primary_key :id
+      foreign_key :pod_id, :pods, :null => false, :key => [:id]
 
       Integer  :github_stars, :null => true
       Integer  :github_forks, :null => true

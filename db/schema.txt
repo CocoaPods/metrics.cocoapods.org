@@ -13,16 +13,6 @@ owners_pods
 | pod_id   | 23  | "integer" | nil     | false      | true        | :integer | nil          |
 +----------+-----+-----------+---------+------------+-------------+----------+--------------+
 
-pods
-+------------+------+-------------------------------+------------------------------------+------------+-------------+-----------+--------------+
-| name       | oid  | db_type                       | default                            | allow_null | primary_key | type      | ruby_default |
-+------------+------+-------------------------------+------------------------------------+------------+-------------+-----------+--------------+
-| id         | 23   | "integer"                     | "nextval('pods_id_seq'::regclass)" | false      | true        | :integer  | nil          |
-| name       | 1043 | "character varying(255)"      | nil                                | false      | false       | :string   | nil          |
-| created_at | 1114 | "timestamp without time zone" | nil                                | false      | false       | :datetime | nil          |
-| updated_at | 1114 | "timestamp without time zone" | nil                                | true       | false       | :datetime | nil          |
-+------------+------+-------------------------------+------------------------------------+------------+-------------+-----------+--------------+
-
 commits
 +----------------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
 | name                       | oid  | db_type                       | default                               | allow_null | primary_key | type      | ruby_default |
@@ -54,6 +44,16 @@ sessions
 | created_from_ip    | 1043 | "character varying(255)"      | nil                                    | false      | false       | :string   | nil          |
 | description        | 1043 | "character varying(255)"      | nil                                    | true       | false       | :string   | nil          |
 +--------------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
+
+pods
++------------+------+-------------------------------+------------------------------------+------------+-------------+-----------+--------------+
+| name       | oid  | db_type                       | default                            | allow_null | primary_key | type      | ruby_default |
++------------+------+-------------------------------+------------------------------------+------------+-------------+-----------+--------------+
+| id         | 23   | "integer"                     | "nextval('pods_id_seq'::regclass)" | false      | true        | :integer  | nil          |
+| name       | 1043 | "character varying(255)"      | nil                                | false      | false       | :string   | nil          |
+| created_at | 1114 | "timestamp without time zone" | nil                                | false      | false       | :datetime | nil          |
+| updated_at | 1114 | "timestamp without time zone" | nil                                | true       | false       | :datetime | nil          |
++------------+------+-------------------------------+------------------------------------+------------+-------------+-----------+--------------+
 
 pod_versions
 +------------+------+-------------------------------+--------------------------------------------+------------+-------------+-----------+--------------+
@@ -116,6 +116,7 @@ metrics
 | name                 | oid  | db_type                       | default                               | allow_null | primary_key | type      | ruby_default |
 +----------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
 | id                   | 23   | "integer"                     | "nextval('metrics_id_seq'::regclass)" | false      | true        | :integer  | nil          |
+| pod_id               | 23   | "integer"                     | nil                                   | false      | false       | :integer  | nil          |
 | github_stars         | 23   | "integer"                     | nil                                   | true       | false       | :integer  | nil          |
 | github_forks         | 23   | "integer"                     | nil                                   | true       | false       | :integer  | nil          |
 | github_watchers      | 23   | "integer"                     | nil                                   | true       | false       | :integer  | nil          |
