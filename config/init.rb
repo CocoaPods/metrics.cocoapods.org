@@ -69,5 +69,4 @@ if defined?(IRB)
       require model[0..-4]
     end
   end
-  include Pod::TrunkApp
 end
