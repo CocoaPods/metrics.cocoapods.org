@@ -6,6 +6,6 @@ class Pod < Sequel::Model(:pods)
   # E.g. Pod.with_metrics.first[:github_stars]
   #
   def self.with_metrics
-    Pod.join(:metrics, :pod_id => :id)
+    Pod.left_join(:metrics, :pod_id => :id)
   end
 end
