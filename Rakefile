@@ -43,7 +43,14 @@ begin
       ENV['METRICS_APP_LOG_TO_STDOUT'] = 'true'
       Rake::Task[:env].invoke
       version = ENV['VERSION'].to_i if ENV['VERSION']
-      Sequel::Migrator.run(DB, File.join(ROOT, 'db/migrations'), :target => version)
+      Sequel::Migrator.run(
+        DB,
+        File.join(ROOT, 'db/migrations'),
+        :target => version,
+        # This enables us to have separate migrations
+        # for each app.
+        :table => :schema_migrations_metrics
+      )
       File.open('db/schema.txt', 'w') { |file| file.write(schema) }
     end
   end
