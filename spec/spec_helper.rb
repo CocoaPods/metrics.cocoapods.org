@@ -7,7 +7,7 @@ require 'digest'
 require 'mocha-on-bacon'
 Mocha::Configuration.prevent(:stubbing_non_existent_method)
 
-require 'cocoapods-core'
+# require 'cocoapods-core'
 
 ENV['RACK_ENV'] = 'test'
 
@@ -26,6 +26,16 @@ class Bacon::Context
     singleton_class.send(:define_method, :app) { app }
     singleton_class.send(:define_method, :response_doc) { Nokogiri::HTML(last_response.body) }
   end
+
+  alias_method :run_requirement_before_sequel, :run_requirement
+  def run_requirement(description, spec)
+    TRUNK_APP_LOGGER.info('-' * description.size)
+    TRUNK_APP_LOGGER.info(description)
+    TRUNK_APP_LOGGER.info('-' * description.size)
+    Sequel::Model.db.transaction(:rollback => :always) do
+      run_requirement_before_sequel(description, spec)
+    end
+  end
 end
 module Kernel
   alias_method :describe_before_controller_tests, :describe
@@ -36,7 +46,7 @@ module Kernel
       # Configure controller test and always use HTTPS
       describe_before_controller_tests(*description) do
         test_controller!(klass)
-        before { header 'X-Forwarded-Proto', 'https' }
+        # before { header 'X-Forwarded-Proto', 'https' }
         instance_eval(&block)
       end
     else
