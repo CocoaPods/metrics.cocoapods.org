@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
 
-# gem 'activesupport'
-gem 'cocoapods-core' #, :git => 'https://github.com/CocoaPods/Core.git'
+gem 'activesupport'
+# gem 'cocoapods-core' #, :git => 'https://github.com/CocoaPods/Core.git'
+gem 'i18n'
 gem 'json', '~> 1.8'
 # gem 'nap', :git => 'https://github.com/alloy/nap.git', :branch => 'error'
 gem 'pg'
