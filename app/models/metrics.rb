@@ -1,5 +1,5 @@
 class Metrics < Sequel::Model(:metrics)
   plugin :timestamps
 
-  one_to_one :pod
+  many_to_one :pod
 end
