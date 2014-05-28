@@ -13,7 +13,6 @@ ENV['RACK_ENV'] = 'test'
 
 $LOAD_PATH.unshift File.expand_path('../../', __FILE__)
 require 'config/init'
-require 'app'
 
 $LOAD_PATH.unshift(ROOT, 'spec')
 Dir.glob(File.join(ROOT, 'spec/spec_helper/**/*.rb')).each do |filename|
