@@ -20,8 +20,30 @@ Dir.glob(File.join(ROOT, 'spec/spec_helper/**/*.rb')).each do |filename|
   require File.join('spec_helper', File.basename(filename, '.rb'))
 end
 
-class Should
-  include SpecHelpers::ModelAssertions
+class Bacon::Context
+  def test_controller!(app)
+    extend Rack::Test::Methods
+
+    singleton_class.send(:define_method, :app) { app }
+    singleton_class.send(:define_method, :response_doc) { Nokogiri::HTML(last_response.body) }
+  end
+end
+module Kernel
+  alias_method :describe_before_controller_tests, :describe
+
+  def describe(*description, &block)
+    if description.first.is_a?(Class) # && description.first.superclass.ancestors.include?(ParentController)
+      klass = description.first
+      # Configure controller test and always use HTTPS
+      describe_before_controller_tests(*description) do
+        test_controller!(klass)
+        before { header 'X-Forwarded-Proto', 'https' }
+        instance_eval(&block)
+      end
+    else
+      describe_before_controller_tests(*description, &block)
+    end
+  end
 end
 
 module Bacon
