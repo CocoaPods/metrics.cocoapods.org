@@ -66,23 +66,6 @@ pod_versions
 | pod_id     | 23   | "integer"                     | nil                                        | false      | false       | :integer  | nil          |
 +------------+------+-------------------------------+--------------------------------------------+------------+-------------+-----------+--------------+
 
-github_metrics
-+---------------+------+-------------------------------+----------------------------------------------+------------+-------------+-----------+--------------+
-| name          | oid  | db_type                       | default                                      | allow_null | primary_key | type      | ruby_default |
-+---------------+------+-------------------------------+----------------------------------------------+------------+-------------+-----------+--------------+
-| id            | 23   | "integer"                     | "nextval('github_metrics_id_seq'::regclass)" | false      | true        | :integer  | nil          |
-| pod_id        | 23   | "integer"                     | nil                                          | false      | false       | :integer  | nil          |
-| stars         | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| forks         | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| watchers      | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| contributors  | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| pull_requests | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| first_commit  | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
-| last_commit   | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
-| created_at    | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
-| updated_at    | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
-+---------------+------+-------------------------------+----------------------------------------------+------------+-------------+-----------+--------------+
-
 log_messages
 +----------------+------+-------------------------------+--------------------------------------------+------------+-------------+-----------+--------------+
 | name           | oid  | db_type                       | default                                    | allow_null | primary_key | type      | ruby_default |
@@ -109,13 +92,6 @@ owners
 | updated_at | 1114 | "timestamp without time zone" | nil                                  | true       | false       | :datetime | nil          |
 +------------+------+-------------------------------+--------------------------------------+------------+-------------+-----------+--------------+
 
-schema_migrations_metrics
-+----------+-----+---------+---------+------------+-------------+---------+--------------+
-| name     | oid | db_type | default | allow_null | primary_key | type    | ruby_default |
-+----------+-----+---------+---------+------------+-------------+---------+--------------+
-| filename | 25  | "text"  | nil     | false      | true        | :string | nil          |
-+----------+-----+---------+---------+------------+-------------+---------+--------------+
-
 disputes
 +------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
 | name       | oid  | db_type                       | default                                | allow_null | primary_key | type      | ruby_default |
@@ -127,4 +103,11 @@ disputes
 | created_at | 1114 | "timestamp without time zone" | nil                                    | false      | false       | :datetime | nil          |
 | updated_at | 1114 | "timestamp without time zone" | nil                                    | true       | false       | :datetime | nil          |
 +------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
+
+schema_migrations_metrics
++----------+-----+---------+---------+------------+-------------+---------+--------------+
+| name     | oid | db_type | default | allow_null | primary_key | type    | ruby_default |
++----------+-----+---------+---------+------------+-------------+---------+--------------+
+| filename | 25  | "text"  | nil     | false      | true        | :string | nil          |
++----------+-----+---------+---------+------------+-------------+---------+--------------+
 

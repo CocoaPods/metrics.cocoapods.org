@@ -4,11 +4,13 @@ Sequel.migration do
       primary_key :id
       foreign_key :pod_id, :pods, :null => false, :key => [:id]
 
-      Integer :stars, :null => true
+      Integer :subscribers, :null => true
+      Integer :stargazers, :null => true
       Integer :forks, :null => true
-      Integer :watchers, :null => true
       Integer :contributors, :null => true
-      Integer :pull_requests, :null => true
+      Integer :open_issues, :null => true
+      Integer :open_pull_requests, :null => true
+
       DateTime :first_commit, :null => true
       DateTime :last_commit, :null => true
 
