@@ -1,6 +1,11 @@
 require 'sinatra/base'
+require 'app/models/github_metrics'
 
 class MetricsApp < Sinatra::Base
+  get '/api/v1/status' do
+    { :github => GithubMetrics.count }.to_json
+  end
+
   # Install trunk hook path for both GET (comfy manual) and POST (ping from trunk).
   #
   %w(get post).each do |type|
