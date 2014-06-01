@@ -1,4 +1,6 @@
-module Metrics
+require File.expand_path '../metaclass', __FILE__
+
+module PodMetrics
   def self.included(klass)
     if klass.name == 'Pod'
       @metrics_classes.each do |metrics_class|
