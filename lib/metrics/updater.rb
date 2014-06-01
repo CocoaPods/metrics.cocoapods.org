@@ -30,7 +30,10 @@ module Metrics
     #
     def self.update(pods)
       pods.each do |pod|
-        # TODO: Update.
+        # TODO: Update like so:
+        # url = ... # Github URL from pod data.
+        # github = Metrics::Github.new(url)
+        # github.update(pod)
         #
         sleep 100
       end
