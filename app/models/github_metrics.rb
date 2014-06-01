@@ -1,7 +1,7 @@
-require 'lib/metrics'
+require 'lib/pod_metrics'
 
 class GithubMetrics < Sequel::Model(:github_metrics)
-  include Metrics
+  include PodMetrics
 
   plugin :timestamps
 end
