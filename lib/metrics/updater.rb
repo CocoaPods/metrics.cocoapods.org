@@ -36,6 +36,7 @@ module Metrics
         # github.update(pod)
         #
         sleep 100
+        puts pod # Rubocop made me do it.
       end
     rescue StandardError
       # TODO: Log.
