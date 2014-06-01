@@ -3,6 +3,10 @@ require 'lib/pod_metrics'
 # Only for reading purposes.
 #
 class Pod < Sequel::Model(:pods)
+  # Currently adds:
+  #   * Pod#github_metrics (one_to_one)
+  #   * Pod.with_github_metrics
+  #
   include PodMetrics
 
   plugin :timestamps
