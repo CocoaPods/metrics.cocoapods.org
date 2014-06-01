@@ -6,6 +6,9 @@ module Metrics
 
     def initialize(url)
       @user, @repo = parse url
+
+      # TODO: Use Bot auth for maximum GH API access allowance.
+      #
       @client = ::Github.new(:user => @user, :repo => @repo)
     end
 
