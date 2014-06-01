@@ -12,6 +12,10 @@ gem 'sinatra'
 gem 'slim', '< 2.0'
 gem 'sass'
 
+# API libraries.
+#
+gem 'github_api'
+
 group :rake do
   gem 'rake'
   gem 'terminal-table'
