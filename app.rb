@@ -1,1 +1,1 @@
-require 'app/controller'
+require 'config/init'

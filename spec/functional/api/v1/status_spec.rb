@@ -1,7 +1,6 @@
 require File.expand_path('../../../../spec_helper', __FILE__)
 require File.expand_path('../../../../../app/controller', __FILE__)
-require File.expand_path('../../../../../app/models/github_metrics', __FILE__)
-require File.expand_path('../../../../../app/models/pod', __FILE__)
+require File.expand_path('../../../../../app/models', __FILE__)
 
 describe MetricsApp, '/api/v1/status' do
 
@@ -9,14 +8,14 @@ describe MetricsApp, '/api/v1/status' do
     pod = Pod.create(:name => 'TestPod1')
     GithubMetrics.create(
       :pod => pod,
-      :stars => 12,
-      :pull_requests => 1
+      :stargazers => 12,
+      :open_pull_requests => 1
     )
     pod = Pod.create(:name => 'TestPod2')
     GithubMetrics.create(
       :pod => pod,
-      :stars => 1001,
-      :pull_requests => 23
+      :stargazers => 1001,
+      :open_pull_requests => 23
     )
   end
 

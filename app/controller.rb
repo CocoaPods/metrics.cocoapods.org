@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require 'app/models/github_metrics'
+require 'app/models'
 
 class MetricsApp < Sinatra::Base
   get '/api/v1/status' do
