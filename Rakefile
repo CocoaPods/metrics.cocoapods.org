@@ -49,7 +49,7 @@ begin
         :target => version,
         # This enables us to have separate migrations
         # for each app.
-        :table => :schema_migrations_metrics
+        :table => :schema_info_metrics
       )
       File.open('db/schema.txt', 'w') { |file| file.write(schema) }
     end
