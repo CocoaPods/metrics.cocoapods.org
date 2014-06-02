@@ -31,12 +31,13 @@ module Metrics
     def self.update(pods)
       pods.each do |pod|
         # TODO: Update like so:
-        # url = ... # Github URL from pod data.
+        # pod_data = ... # Get pod data via pod.
+        # url = pod_data[:source][:git] # Github URL from pod data - handle non-github source.
         # github = Metrics::Github.new(url)
         # github.update(pod)
         #
-        sleep 100
         puts pod # Rubocop made me do it.
+        sleep 100
       end
     rescue StandardError
       # TODO: Log.
