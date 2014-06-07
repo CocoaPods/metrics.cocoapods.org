@@ -14,7 +14,8 @@ module Metrics
 
         # Reconnect the database.
         #
-        Sequel::Model.db.connect(Sequel::Model.db.opts)
+        opts = Sequel::Model.db.opts
+        Sequel.connect(opts[:uri], opts[:orig_opts])
 
         loop do
           pods = find_pods_without_github_metrics.limit(10).all
@@ -35,12 +36,13 @@ module Metrics
     #
     def self.update(pods)
       pods.each do |pod|
-        next unless url = pod.github_url
-
-        github = Metrics::Github.new(url)
-        github.update(pod)
+        if url = pod.github_url
+          github = Metrics::Github.new(url)
+          github.update(pod)
+        end
       end
-    rescue StandardError
+    rescue StandardError => e
+      METRICS_APP_LOGGER.info e
       # TODO: Log.
       sleep 10
     end
