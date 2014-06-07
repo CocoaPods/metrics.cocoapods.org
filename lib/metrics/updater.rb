@@ -10,8 +10,12 @@ module Metrics
     end
 
     def self.run_child_process
-      puts 'Metrics updating process started.'
       @child_id = fork do
+
+        # Reconnect the database.
+        #
+        Sequel::Model.db.connect(Sequel::Model.db.opts)
+
         loop do
           pods = find_pods_without_github_metrics.limit(10).all
           if pods.empty?
@@ -23,6 +27,7 @@ module Metrics
             update pods
           end
         end
+
       end
     end
 
