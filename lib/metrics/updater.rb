@@ -11,26 +11,16 @@ module Metrics
 
     def self.run_child_process
       @child_id = fork do
-        begin
-          # Dis- and Reconnect the database.
-          #
-          opts = Sequel::Model.db.opts
-          DB.disconnect
-          Sequel.connect(opts[:uri], opts[:orig_opts])
-
-          loop do
-            pods = find_pods_without_github_metrics.limit(10).all
-            if pods.empty?
-              pods = find_pods_with_old_github_metrics.limit(10).all
-            end
-            if pods.empty?
-              next
-            else
-              update pods
-            end
+        loop do
+          pods = find_pods_without_github_metrics.limit(10).all
+          if pods.empty?
+            pods = find_pods_with_old_github_metrics.limit(10).all
           end
-        rescue StandardError => e
-          sleep 10
+          if pods.empty?
+            next
+          else
+            update pods
+          end
         end
       end
     end
