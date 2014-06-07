@@ -45,7 +45,7 @@ module Metrics
         end
       end
     rescue StandardError => e
-      METRICS_APP_LOGGER.info e
+      METRICS_APP_LOGGER.error e
       # TODO: Log.
       sleep 10
     end
