@@ -11,6 +11,7 @@ module Metrics
 
     def self.run_child_process
       @child_id = fork do
+        METRICS_APP_LOGGER.info 'Metrics::Updater child process started.'
 
         # Dis- and Reconnect the database.
         #
@@ -38,6 +39,7 @@ module Metrics
     def self.update(pods)
       pods.each do |pod|
         if url = pod.github_url
+          METRICS_APP_LOGGER.info "Updating pod #{pod.name}."
           github = Metrics::Github.new(url)
           github.update(pod)
         end
