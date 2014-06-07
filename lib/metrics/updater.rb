@@ -1,3 +1,4 @@
+require File.expand_path('../github', __FILE__)
 require 'app/models'
 
 module Metrics
@@ -11,7 +12,6 @@ module Metrics
     def self.run_child_process
       puts 'Metrics updating process started.'
       @child_id = fork do
-        puts 'Before loop'
         loop do
           pods = find_pods_without_github_metrics.limit(10).all
           if pods.empty?
@@ -30,14 +30,11 @@ module Metrics
     #
     def self.update(pods)
       pods.each do |pod|
-        # TODO: Update like so:
-        # pod_data = ... # Get pod data via pod.
-        # url = pod_data[:source][:git] # Github URL from pod data - handle non-github source.
-        # github = Metrics::Github.new(url)
-        # github.update(pod)
-        #
-        puts pod # Rubocop made me do it.
-        sleep 100
+        url = pod.github_url
+        if url
+          github = Metrics::Github.new(url)
+          github.update(pod)
+        end
       end
     rescue StandardError
       # TODO: Log.

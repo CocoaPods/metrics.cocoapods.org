@@ -14,16 +14,21 @@ module Metrics
 
     # Updates a GithubMetrics model with the latest Github data.
     #
-    def update(metrics_model)
+    def update(pod)
       r = client.repos.find
 
-      metrics_model.update(
-        :subscribers => r.subscribers_count,
-        :stargazers => r.stargazers_count,
-        :forks => r.forks_count,
-        :contributors => client.repos.contributors.size,
-        :open_issues => r.open_issues_count,
-        :open_pull_requests => client.pull_requests.all.size
+      GithubMetrics.update_or_create(
+        { :pod_id => pod.id },
+        {
+          :subscribers => r.subscribers_count,
+          :stargazers => r.stargazers_count,
+          :forks => r.forks_count,
+          :contributors => client.repos.contributors.size,
+          :open_issues => r.open_issues_count,
+          :open_pull_requests => client.pull_requests.all.size
+          # first_commit
+          # last_commit
+        }
       )
     end
 
