@@ -5,6 +5,7 @@ require 'config/init'
 
 # Start periodic updating process.
 #
+METRICS_APP_LOGGER.info "Starting Metrics::Updater."
 require 'lib/metrics/updater'
 Metrics::Updater.start
 
