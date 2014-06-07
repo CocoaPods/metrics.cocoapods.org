@@ -11,7 +11,7 @@ module Metrics
         :user => @user,
         :repo => @repo
       }
-      params[:basic_auth] = "#{GITHUB_BOT_USER}:#{GITHUB_BOT_PASS}" if GITHUB_BOT_USER && GITHUB_BOT_PASS
+      params[:basic_auth] = "#{ENV['GITHUB_BOT_USER']}:#{ENV['GITHUB_BOT_PASS']}" if ENV['GITHUB_BOT_USER'] && ENV['GITHUB_BOT_PASS']
       @client = ::Github.new(params)
     end
 
