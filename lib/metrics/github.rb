@@ -7,9 +7,12 @@ module Metrics
     def initialize(url)
       @user, @repo = parse url
 
-      # TODO: Use Bot auth for maximum GH API access allowance.
-      #
-      @client = ::Github.new(:user => @user, :repo => @repo)
+      params = {
+        :user => @user,
+        :repo => @repo
+      }
+      params[:basic_auth] = "#{GITHUB_BOT_USER}:#{GITHUB_BOT_PASS}" if GITHUB_BOT_USER && GITHUB_BOT_PASS
+      @client = ::Github.new(params)
     end
 
     # Updates a GithubMetrics model with the latest Github data.
