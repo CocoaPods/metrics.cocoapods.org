@@ -47,7 +47,7 @@ module PodMetrics
     metrics_class.__metaclass__.send(:define_method, :install_with_method) do |klass|
       klass.__metaclass__.send(:define_method, :"with_#{table_name}") do
         left_join(table_name, :pod_id => :id)
-          .select(:"pods__id")
+          .select(:pods__id, :pods__name)
           .select_append(*metrics_class.aliased_columns)
       end
     end

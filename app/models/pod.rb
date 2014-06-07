@@ -35,7 +35,7 @@ class Pod < Sequel::Model(:pods)
   end
 
   def github_url
-    data = JSON.parse(specification_data || "{}")
+    data = JSON.parse(specification_data || '{}')
     source = data['source'] || {}
     source['git']
   end

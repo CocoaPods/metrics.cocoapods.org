@@ -35,11 +35,10 @@ module Metrics
     #
     def self.update(pods)
       pods.each do |pod|
-        url = pod.github_url
-        if url
-          github = Metrics::Github.new(url)
-          github.update(pod)
-        end
+        next unless url = pod.github_url
+
+        github = Metrics::Github.new(url)
+        github.update(pod)
       end
     rescue StandardError
       # TODO: Log.
