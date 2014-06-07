@@ -12,9 +12,10 @@ module Metrics
     def self.run_child_process
       @child_id = fork do
 
-        # Reconnect the database.
+        # Dis- and Reconnect the database.
         #
         opts = Sequel::Model.db.opts
+        DB.disconnect
         Sequel.connect(opts[:uri], opts[:orig_opts])
 
         loop do
