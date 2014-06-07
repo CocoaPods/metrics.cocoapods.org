@@ -9,6 +9,8 @@ class Pod < Sequel::Model(:pods)
   #
   include PodMetrics
 
+  one_to_many :versions
+
   plugin :timestamps
 
   # E.g. Pod.oldest(2)
@@ -23,5 +25,17 @@ class Pod < Sequel::Model(:pods)
 
   def self.with_old_github_metrics
     with_github_metrics.where('github_metrics.updated_at < ?', Date.today - 3)
+  end
+
+  def specification_data
+    version = versions.last
+    commit = version.commits.last if version
+    commit.specification_data if commit
+  end
+
+  def github_url
+    data = JSON.parse(specification_data || "{}")
+    source = data['source'] || {}
+    source['git']
   end
 end
