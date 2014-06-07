@@ -6,6 +6,14 @@ class MetricsApp < Sinatra::Base
     { :github => GithubMetrics.count }.to_json
   end
 
+  get '/api/v1/pods/:name' do
+    pod = Pod.first(:name => params[:name])
+    github_values = pod.github_metrics.values
+    github_values.delete(:id)
+    github_values.delete(:pod_id)
+    { :github => github_values }.to_json
+  end
+
   # Install trunk hook path for both GET (comfy manual) and POST (ping from trunk).
   #
   %w(get post).each do |type|
