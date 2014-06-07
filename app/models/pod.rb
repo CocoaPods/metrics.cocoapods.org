@@ -1,4 +1,5 @@
 require 'lib/pod_metrics'
+require File.expand_path '../version', __FILE__
 
 # Only for reading purposes.
 #
