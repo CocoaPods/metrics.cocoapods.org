@@ -24,7 +24,7 @@ module Metrics
         Sequel.connect(opts[:uri], opts[:orig_opts])
 
         loop do
-          pods = find_pods_without_github_metrics
+          pods = find_pods_without_github_metrics(amount / 2)
           if pods.size < amount
             pods += find_pods_with_old_github_metrics(amount - pods.size)
           end
@@ -49,10 +49,10 @@ module Metrics
       sleep 10
     end
 
-    def self.find_pods_without_github_metrics
+    def self.find_pods_without_github_metrics(update_amount = amount)
       Pod.without_github_metrics
         .order(Sequel.lit('RANDOM()'))
-        .limit(amount)
+        .limit(update_amount)
         .all
     end
 
