@@ -73,4 +73,22 @@ describe Pod do
     end
   end
 
+  describe '#github_url' do
+    before do
+      @pod = Pod.create(:name => 'TestPod1')
+    end
+    describe 'Non-.git extension' do
+      before do
+        @pod.expects(:specification_data).once.returns(
+          'source' => {
+            'git' => 'https://github.com/mystcolor/JTAttributedLabel'
+          }
+        )
+      end
+      it 'extracts the github_url correctly' do
+        @pod.github_url.should == 'https://github.com/mystcolor/JTAttributedLabel'
+      end
+    end
+  end
+
 end

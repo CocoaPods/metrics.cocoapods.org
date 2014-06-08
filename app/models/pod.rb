@@ -28,14 +28,18 @@ class Pod < Sequel::Model(:pods)
     with_github_metrics.where('github_metrics.updated_at < ?', Date.today - 3)
   end
 
-  def specification_data
+  def specification_json
     version = versions.last
     commit = version.commits.last if version
     commit.specification_data if commit
   end
 
+  def specification_data
+    JSON.parse(specification_json || '{}')
+  end
+
   def github_url
-    data = JSON.parse(specification_data || '{}')
+    data = specification_data
     source = data['source'] || {}
     source['git']
   end
