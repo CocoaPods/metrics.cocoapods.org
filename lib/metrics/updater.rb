@@ -41,11 +41,11 @@ module Metrics
     end
 
     def self.find_pods_without_github_metrics
-      Pod.without_github_metrics.order(Sequel.lit('RANDOM()')).limit(10).all
+      Pod.without_github_metrics.order(Sequel.lit('RANDOM()')).limit(100).all
     end
 
     def self.find_pods_with_old_github_metrics
-      Pod.with_old_github_metrics.order(Sequel.lit('RANDOM()')).limit(10).all
+      Pod.with_old_github_metrics.order(Sequel.lit('RANDOM()')).limit(100).all
     end
 
     def self.stop
