@@ -4,7 +4,13 @@ require 'app/models'
 module Metrics
   # Runs a child process where pods are updated periodically.
   #
+  # TODO At some point add a state to metrics "failed" to indicate to not retry loading the metrics.
+  #
   class Updater
+    def self.amount
+      100
+    end
+
     def self.start
       run_child_process
     end
@@ -19,8 +25,8 @@ module Metrics
 
         loop do
           pods = find_pods_without_github_metrics
-          if pods.empty?
-            pods = find_pods_with_old_github_metrics
+          if pods.size < amount
+            pods = find_pods_with_old_github_metrics(amount - pods.size)
           end
           if pods.empty?
             sleep 10
@@ -51,11 +57,11 @@ module Metrics
     end
 
     def self.find_pods_without_github_metrics
-      Pod.without_github_metrics.order(Sequel.lit('RANDOM()')).limit(100).all
+      Pod.without_github_metrics.order(Sequel.lit('RANDOM()')).limit(amount).all
     end
 
-    def self.find_pods_with_old_github_metrics
-      Pod.with_old_github_metrics.order(Sequel.lit('RANDOM()')).limit(100).all
+    def self.find_pods_with_old_github_metrics(update_amount = amount)
+      Pod.with_old_github_metrics.order(Sequel.lit('RANDOM()')).limit(update_amount).all
     end
 
     def self.stop
