@@ -36,10 +36,10 @@ module Metrics
         }
       )
     rescue StandardError => e
-      handle_update_error(e)
+      handle_update_error(e, pod)
     end
 
-    def handle_update_error(e)
+    def handle_update_error(e, pod)
       METRICS_APP_LOGGER.error e
       case e.message
       when /404 Not Found/
