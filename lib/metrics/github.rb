@@ -45,7 +45,7 @@ module Metrics
     #   lakesoft and LKAssetsLibrary
     #
     def parse(url)
-      matches = url.match(%r{(?<user>[^/]+)/(?<repo>[^/]+)\.git})
+      matches = url.match(%r{[:/](?<user>[^/]+)/(?<repo>[^/]+)\.git})
       [matches[:user], matches[:repo]]
     end
   end
