@@ -1,12 +1,8 @@
-require 'bundler/setup'
-
-$:.unshift File.expand_path('..', __FILE__)
-require 'config/init'
+require File.expand_path('../app', __FILE__)
 
 # Start periodic updating process.
 #
-require 'lib/metrics/updater'
-Metrics::Updater.start
+require 'updater'
 
 require 'app/controller'
 run MetricsApp
