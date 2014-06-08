@@ -17,11 +17,7 @@ module Metrics
 
     def self.run_child_process
       @child_id = fork do
-        # Reopen shared connection.
-        #
-        DB.disconnect
-        opts = DB.opts
-        Sequel.connect(opts[:uri], opts[:orig_opts])
+        reconnect_db
 
         loop do
           pods = find_pods_without_github_pod_metrics(amount / 2)
@@ -35,6 +31,14 @@ module Metrics
           end
         end
       end
+    end
+
+    # Reopens shared connection.
+    #
+    def self.reconnect_db
+      DB.disconnect
+      opts = DB.opts
+      Sequel.connect(opts[:uri], opts[:orig_opts])
     end
 
     # Update each pod.
@@ -66,6 +70,7 @@ module Metrics
     end
 
     def self.stop
+      DB.disconnect
       Process.kill 'INT', @child_id if @child_id
     rescue
       'RuboCop: Do not suppress exceptions.'
