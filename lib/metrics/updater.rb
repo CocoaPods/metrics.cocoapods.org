@@ -46,7 +46,7 @@ module Metrics
       if e.message =~ /403 API rate limit exceeded/
         sleep 4000
       else
-        sleep e.message =~ /404 Not Found/ ? 1 : 4000
+        sleep e.message =~ /404 Not Found/ ? 1 : 10
       end
     end
 
