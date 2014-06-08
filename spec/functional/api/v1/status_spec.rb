@@ -17,12 +17,23 @@ describe MetricsApp, '/api/v1/status' do
       :stargazers => 1001,
       :open_pull_requests => 23
     )
+    pod = Pod.create(:name => 'TestPod3')
+    GithubMetrics.create(
+      :pod => pod,
+      :not_found => 2
+    )
   end
 
   it 'returns the right amount' do
     get '/api/v1/status'
     last_response.status.should == 200
-    JSON.parse(last_response.body).should == { 'github' => 2 }
+    JSON.parse(last_response.body).should == {
+      'github' => {
+        'total' => 3,
+        'complete' => 2,
+        'not_found' => 1
+      }
+    }
   end
 
 end

@@ -3,7 +3,13 @@ require 'app/models'
 
 class MetricsApp < Sinatra::Base
   get '/api/v1/status' do
-    { :github => GithubMetrics.count }.to_json
+    {
+      :github => {
+        :total => GithubMetrics.count,
+        :complete => GithubMetrics.where('not_found = 0').count,
+        :not_found => GithubMetrics.where('not_found > 0').count
+      }
+    }.to_json
   end
 
   get '/api/v1/pods/:name' do
