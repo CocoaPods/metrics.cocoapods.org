@@ -34,7 +34,6 @@ module Metrics
           github.update(pod)
         end
       end
-      sleep 10
     rescue StandardError => e
       METRICS_APP_LOGGER.error e
       # TODO: Log.
