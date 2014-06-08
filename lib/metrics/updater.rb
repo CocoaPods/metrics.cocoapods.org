@@ -4,7 +4,7 @@ require 'app/models'
 module Metrics
   # Runs a child process where pods are updated periodically.
   #
-  # TODO At some point add a state to metrics "failed" to indicate to not retry loading the metrics.
+  # TODO: At some point add a state to metrics "failed" to indicate to not retry loading the metrics.
   #
   class Updater
     def self.amount
@@ -39,6 +39,8 @@ module Metrics
 
     # Update each pod.
     #
+    # TODO: Refactor.
+    #
     def self.update(pods)
       pods.each do |pod|
         if url = pod.github_url
@@ -47,21 +49,23 @@ module Metrics
           sleep 1
         end
       end
-    rescue StandardError => e
-      METRICS_APP_LOGGER.error e
-      if e.message =~ /403 API rate limit exceeded/
-        sleep 4000
-      else
-        sleep e.message =~ /404 Not Found/ ? 1 : 10
-      end
+    rescue StandardError
+      sleep 10
     end
 
     def self.find_pods_without_github_metrics
-      Pod.without_github_metrics.order(Sequel.lit('RANDOM()')).limit(amount).all
+      Pod.without_github_metrics
+        .order(Sequel.lit('RANDOM()'))
+        .limit(amount)
+        .all
     end
 
     def self.find_pods_with_old_github_metrics(update_amount = amount)
-      Pod.with_old_github_metrics.order(Sequel.lit('RANDOM()')).limit(update_amount).all
+      Pod.with_old_github_metrics
+        .order(Sequel.lit('RANDOM()'))
+        .where('github_metrics.not_found < 3')
+        .limit(update_amount)
+        .all
     end
 
     def self.stop

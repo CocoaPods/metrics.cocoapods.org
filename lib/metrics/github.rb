@@ -35,6 +35,32 @@ module Metrics
           # last_commit
         }
       )
+    rescue StandardError => e
+      handle_update_error(e)
+    end
+
+    def handle_update_error(e)
+      METRICS_APP_LOGGER.error e
+      case e.message
+      when /404 Not Found/
+        not_found(pod)
+      when /403 API rate limit exceeded/
+        sleep 4000 # Wait until the rate limit is over.
+      else
+        raise
+      end
+    end
+
+    # Adds 1 to a GithubMetrics model's not found attribute.
+    #
+    def not_found(pod)
+      metrics = pod.github_metrics
+
+      if metrics
+        metrics.update(:not_found => (metrics.not_found + 1))
+      else
+        GithubMetrics.create(:pod_id => pod.id, :not_found => 1)
+      end
     end
 
     private

@@ -1,3 +1,10 @@
+schema_info
++---------+-----+-----------+---------+------------+-------------+----------+--------------+
+| name    | oid | db_type   | default | allow_null | primary_key | type     | ruby_default |
++---------+-----+-----------+---------+------------+-------------+----------+--------------+
+| version | 23  | "integer" | "0"     | false      | false       | :integer | 0            |
++---------+-----+-----------+---------+------------+-------------+----------+--------------+
+
 pods
 +------------+------+-------------------------------+------------------------------------+------------+-------------+-----------+--------------+
 | name       | oid  | db_type                       | default                            | allow_null | primary_key | type      | ruby_default |
@@ -8,62 +15,6 @@ pods
 | updated_at | 1114 | "timestamp without time zone" | nil                                | true       | false       | :datetime | nil          |
 +------------+------+-------------------------------+------------------------------------+------------+-------------+-----------+--------------+
 
-github_metrics
-+--------------------+------+-------------------------------+----------------------------------------------+------------+-------------+-----------+--------------+
-| name               | oid  | db_type                       | default                                      | allow_null | primary_key | type      | ruby_default |
-+--------------------+------+-------------------------------+----------------------------------------------+------------+-------------+-----------+--------------+
-| id                 | 23   | "integer"                     | "nextval('github_metrics_id_seq'::regclass)" | false      | true        | :integer  | nil          |
-| pod_id             | 23   | "integer"                     | nil                                          | false      | false       | :integer  | nil          |
-| subscribers        | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| stargazers         | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| forks              | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| contributors       | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| open_issues        | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| open_pull_requests | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
-| first_commit       | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
-| last_commit        | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
-| created_at         | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
-| updated_at         | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
-+--------------------+------+-------------------------------+----------------------------------------------+------------+-------------+-----------+--------------+
-
-schema_migrations
-+----------+-----+---------+---------+------------+-------------+---------+--------------+
-| name     | oid | db_type | default | allow_null | primary_key | type    | ruby_default |
-+----------+-----+---------+---------+------------+-------------+---------+--------------+
-| filename | 25  | "text"  | nil     | false      | true        | :string | nil          |
-+----------+-----+---------+---------+------------+-------------+---------+--------------+
-
-metrics
-+----------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
-| name                 | oid  | db_type                       | default                               | allow_null | primary_key | type      | ruby_default |
-+----------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
-| id                   | 23   | "integer"                     | "nextval('metrics_id_seq'::regclass)" | false      | true        | :integer  | nil          |
-| pod_id               | 23   | "integer"                     | nil                                   | false      | false       | :integer  | nil          |
-| github_stars         | 23   | "integer"                     | nil                                   | true       | false       | :integer  | nil          |
-| github_forks         | 23   | "integer"                     | nil                                   | true       | false       | :integer  | nil          |
-| github_watchers      | 23   | "integer"                     | nil                                   | true       | false       | :integer  | nil          |
-| github_contributors  | 23   | "integer"                     | nil                                   | true       | false       | :integer  | nil          |
-| github_pull_requests | 23   | "integer"                     | nil                                   | true       | false       | :integer  | nil          |
-| github_first_commit  | 1114 | "timestamp without time zone" | nil                                   | true       | false       | :datetime | nil          |
-| github_last_commit   | 1114 | "timestamp without time zone" | nil                                   | true       | false       | :datetime | nil          |
-| created_at           | 1114 | "timestamp without time zone" | nil                                   | true       | false       | :datetime | nil          |
-| updated_at           | 1114 | "timestamp without time zone" | nil                                   | true       | false       | :datetime | nil          |
-+----------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
-
-schema_migrations_metrics
-+----------+-----+---------+---------+------------+-------------+---------+--------------+
-| name     | oid | db_type | default | allow_null | primary_key | type    | ruby_default |
-+----------+-----+---------+---------+------------+-------------+---------+--------------+
-| filename | 25  | "text"  | nil     | false      | true        | :string | nil          |
-+----------+-----+---------+---------+------------+-------------+---------+--------------+
-
-schema_info_metrics
-+---------+-----+-----------+---------+------------+-------------+----------+--------------+
-| name    | oid | db_type   | default | allow_null | primary_key | type     | ruby_default |
-+---------+-----+-----------+---------+------------+-------------+----------+--------------+
-| version | 23  | "integer" | "0"     | false      | false       | :integer | 0            |
-+---------+-----+-----------+---------+------------+-------------+----------+--------------+
-
 owners_pods
 +----------+-----+-----------+---------+------------+-------------+----------+--------------+
 | name     | oid | db_type   | default | allow_null | primary_key | type     | ruby_default |
@@ -71,6 +22,22 @@ owners_pods
 | owner_id | 23  | "integer" | nil     | false      | true        | :integer | nil          |
 | pod_id   | 23  | "integer" | nil     | false      | true        | :integer | nil          |
 +----------+-----+-----------+---------+------------+-------------+----------+--------------+
+
+commits
++----------------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
+| name                       | oid  | db_type                       | default                               | allow_null | primary_key | type      | ruby_default |
++----------------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
+| id                         | 23   | "integer"                     | "nextval('commits_id_seq'::regclass)" | false      | true        | :integer  | nil          |
+| specification_data         | 25   | "text"                        | nil                                   | false      | false       | :string   | nil          |
+| sha                        | 1043 | "character varying(255)"      | nil                                   | false      | false       | :string   | nil          |
+| created_at                 | 1114 | "timestamp without time zone" | nil                                   | true       | false       | :datetime | nil          |
+| updated_at                 | 1114 | "timestamp without time zone" | nil                                   | true       | false       | :datetime | nil          |
+| pod_version_id             | 23   | "integer"                     | nil                                   | false      | false       | :integer  | nil          |
+| committer_id               | 23   | "integer"                     | nil                                   | false      | false       | :integer  | nil          |
+| imported                   | 16   | "boolean"                     | "false"                               | true       | false       | :boolean  | false        |
+| renamed_file_during_import | 16   | "boolean"                     | "false"                               | true       | false       | :boolean  | false        |
+| deleted_file_during_import | 16   | "boolean"                     | "false"                               | true       | false       | :boolean  | false        |
++----------------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
 
 sessions
 +--------------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
@@ -99,41 +66,6 @@ pod_versions
 | pod_id     | 23   | "integer"                     | nil                                        | false      | false       | :integer  | nil          |
 +------------+------+-------------------------------+--------------------------------------------+------------+-------------+-----------+--------------+
 
-schema_info
-+---------+-----+-----------+---------+------------+-------------+----------+--------------+
-| name    | oid | db_type   | default | allow_null | primary_key | type     | ruby_default |
-+---------+-----+-----------+---------+------------+-------------+----------+--------------+
-| version | 23  | "integer" | "0"     | false      | false       | :integer | 0            |
-+---------+-----+-----------+---------+------------+-------------+----------+--------------+
-
-disputes
-+------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
-| name       | oid  | db_type                       | default                                | allow_null | primary_key | type      | ruby_default |
-+------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
-| id         | 23   | "integer"                     | "nextval('disputes_id_seq'::regclass)" | false      | true        | :integer  | nil          |
-| claimer_id | 23   | "integer"                     | nil                                    | false      | false       | :integer  | nil          |
-| message    | 25   | "text"                        | nil                                    | false      | false       | :string   | nil          |
-| settled    | 16   | "boolean"                     | "false"                                | true       | false       | :boolean  | false        |
-| created_at | 1114 | "timestamp without time zone" | nil                                    | false      | false       | :datetime | nil          |
-| updated_at | 1114 | "timestamp without time zone" | nil                                    | true       | false       | :datetime | nil          |
-+------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
-
-commits
-+----------------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
-| name                       | oid  | db_type                       | default                               | allow_null | primary_key | type      | ruby_default |
-+----------------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
-| id                         | 23   | "integer"                     | "nextval('commits_id_seq'::regclass)" | false      | true        | :integer  | nil          |
-| specification_data         | 25   | "text"                        | nil                                   | false      | false       | :string   | nil          |
-| sha                        | 1043 | "character varying(255)"      | nil                                   | false      | false       | :string   | nil          |
-| created_at                 | 1114 | "timestamp without time zone" | nil                                   | true       | false       | :datetime | nil          |
-| updated_at                 | 1114 | "timestamp without time zone" | nil                                   | true       | false       | :datetime | nil          |
-| pod_version_id             | 23   | "integer"                     | nil                                   | false      | false       | :integer  | nil          |
-| committer_id               | 23   | "integer"                     | nil                                   | false      | false       | :integer  | nil          |
-| imported                   | 16   | "boolean"                     | "false"                               | true       | false       | :boolean  | false        |
-| renamed_file_during_import | 16   | "boolean"                     | "false"                               | true       | false       | :boolean  | false        |
-| deleted_file_during_import | 16   | "boolean"                     | "false"                               | true       | false       | :boolean  | false        |
-+----------------------------+------+-------------------------------+---------------------------------------+------------+-------------+-----------+--------------+
-
 log_messages
 +----------------+------+-------------------------------+--------------------------------------------+------------+-------------+-----------+--------------+
 | name           | oid  | db_type                       | default                                    | allow_null | primary_key | type      | ruby_default |
@@ -159,4 +91,49 @@ owners
 | created_at | 1114 | "timestamp without time zone" | nil                                  | true       | false       | :datetime | nil          |
 | updated_at | 1114 | "timestamp without time zone" | nil                                  | true       | false       | :datetime | nil          |
 +------------+------+-------------------------------+--------------------------------------+------------+-------------+-----------+--------------+
+
+schema_migrations_metrics
++----------+-----+---------+---------+------------+-------------+---------+--------------+
+| name     | oid | db_type | default | allow_null | primary_key | type    | ruby_default |
++----------+-----+---------+---------+------------+-------------+---------+--------------+
+| filename | 25  | "text"  | nil     | false      | true        | :string | nil          |
++----------+-----+---------+---------+------------+-------------+---------+--------------+
+
+disputes
++------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
+| name       | oid  | db_type                       | default                                | allow_null | primary_key | type      | ruby_default |
++------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
+| id         | 23   | "integer"                     | "nextval('disputes_id_seq'::regclass)" | false      | true        | :integer  | nil          |
+| claimer_id | 23   | "integer"                     | nil                                    | false      | false       | :integer  | nil          |
+| message    | 25   | "text"                        | nil                                    | false      | false       | :string   | nil          |
+| settled    | 16   | "boolean"                     | "false"                                | true       | false       | :boolean  | false        |
+| created_at | 1114 | "timestamp without time zone" | nil                                    | false      | false       | :datetime | nil          |
+| updated_at | 1114 | "timestamp without time zone" | nil                                    | true       | false       | :datetime | nil          |
++------------+------+-------------------------------+----------------------------------------+------------+-------------+-----------+--------------+
+
+schema_info_metrics
++---------+-----+-----------+---------+------------+-------------+----------+--------------+
+| name    | oid | db_type   | default | allow_null | primary_key | type     | ruby_default |
++---------+-----+-----------+---------+------------+-------------+----------+--------------+
+| version | 23  | "integer" | "0"     | false      | false       | :integer | 0            |
++---------+-----+-----------+---------+------------+-------------+----------+--------------+
+
+github_metrics
++--------------------+------+-------------------------------+----------------------------------------------+------------+-------------+-----------+--------------+
+| name               | oid  | db_type                       | default                                      | allow_null | primary_key | type      | ruby_default |
++--------------------+------+-------------------------------+----------------------------------------------+------------+-------------+-----------+--------------+
+| id                 | 23   | "integer"                     | "nextval('github_metrics_id_seq'::regclass)" | false      | true        | :integer  | nil          |
+| pod_id             | 23   | "integer"                     | nil                                          | false      | false       | :integer  | nil          |
+| subscribers        | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
+| stargazers         | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
+| forks              | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
+| contributors       | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
+| open_issues        | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
+| open_pull_requests | 23   | "integer"                     | nil                                          | true       | false       | :integer  | nil          |
+| first_commit       | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
+| last_commit        | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
+| created_at         | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
+| updated_at         | 1114 | "timestamp without time zone" | nil                                          | true       | false       | :datetime | nil          |
+| not_found          | 23   | "integer"                     | "0"                                          | true       | false       | :integer  | 0            |
++--------------------+------+-------------------------------+----------------------------------------------+------------+-------------+-----------+--------------+
 
