@@ -43,7 +43,7 @@ module Metrics
       METRICS_APP_LOGGER.error e
       case e.message
       when /404 Not Found/
-        not_found(pod)
+        not_found(pod) # Pod is also not found if we can't parse the git source URL.
       when /403 API rate limit exceeded/
         sleep 4000 # Wait until the rate limit is over.
       else
@@ -72,7 +72,7 @@ module Metrics
     #
     def parse(url)
       matches = url.match(%r{[:/](?<user>[^/]+)/(?<repo>[^/\.]+)(\.git)?\z})
-      [matches[:user], matches[:repo]]
+      [matches[:user], matches[:repo]] if matches
     end
   end
 end
