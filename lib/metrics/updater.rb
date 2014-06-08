@@ -44,6 +44,7 @@ module Metrics
     def self.update(pods)
       pods.each do |pod|
         Metrics::Github.new.update(pod)
+        sleep 1
       end
     rescue StandardError
       sleep 10
