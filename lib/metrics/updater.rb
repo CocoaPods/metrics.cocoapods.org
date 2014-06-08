@@ -26,7 +26,7 @@ module Metrics
         loop do
           pods = find_pods_without_github_metrics
           if pods.size < amount
-            pods = find_pods_with_old_github_metrics(amount - pods.size)
+            pods += find_pods_with_old_github_metrics(amount - pods.size)
           end
           if pods.empty?
             sleep 10

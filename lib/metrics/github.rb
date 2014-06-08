@@ -40,6 +40,7 @@ module Metrics
             # last_commit
           }
         )
+        sleep 1
       end
     rescue ParseError
       not_found(pod)
@@ -82,7 +83,7 @@ module Metrics
       matches = url.match(%r{[:/](?<user>[^/]+)/(?<repo>[^/\.]+)(\.git)?\z})
       [matches[:user], matches[:repo]]
     rescue StandardError => e
-      raise ParseError, "Can not parse Github URL."
+      raise ParseError, 'Can not parse Github URL.'
     end
   end
 end
