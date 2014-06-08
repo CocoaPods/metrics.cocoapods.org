@@ -11,6 +11,12 @@ module Metrics
 
     def self.run_child_process
       @child_id = fork do
+        # Reopen shared connection.
+        #
+        DB.disconnect
+        opts = DB.opts
+        Sequel.connect(opts[:uri], opts[:orig_opts])
+
         loop do
           pods = find_pods_without_github_metrics
           if pods.empty?
