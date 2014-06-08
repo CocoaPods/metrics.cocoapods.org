@@ -38,11 +38,16 @@ module Metrics
         if url = pod.github_url
           github = Metrics::Github.new(url)
           github.update(pod)
+          sleep 1
         end
       end
     rescue StandardError => e
       METRICS_APP_LOGGER.error e
-      sleep e.message =~ /404 Not Found/ ? 1 : 10
+      if e.message =~ /403 API rate limit exceeded/
+        sleep 4000
+      else
+        sleep e.message =~ /404 Not Found/ ? 1 : 4000
+      end
     end
 
     def self.find_pods_without_github_metrics
