@@ -2,9 +2,11 @@ require 'github_api'
 
 module Metrics
   class Github
-    attr_reader :user, :repo, :client
+    attr_reader :user, :repo
 
-    def initialize(url)
+    class ParseError < StandardError; end
+
+    def initialize_client(url)
       @user, @repo = parse url
 
       params = {
@@ -14,27 +16,33 @@ module Metrics
       if ENV['GITHUB_BOT_USER'] && ENV['GITHUB_BOT_PASS']
         params[:basic_auth] = "#{ENV['GITHUB_BOT_USER']}:#{ENV['GITHUB_BOT_PASS']}"
       end
-      @client = ::Github.new(params)
+      ::Github.new(params)
     end
 
     # Updates a GithubMetrics model with the latest Github data.
     #
     def update(pod)
-      r = client.repos.find
+      if url = pod.github_url
+        client = initialize_client(url)
 
-      GithubMetrics.update_or_create(
-        { :pod_id => pod.id },
-        {
-          :subscribers => r.subscribers_count,
-          :stargazers => r.stargazers_count,
-          :forks => r.forks_count,
-          :contributors => client.repos.contributors.size,
-          :open_issues => r.open_issues_count,
-          :open_pull_requests => client.pull_requests.all.size
-          # first_commit
-          # last_commit
-        }
-      )
+        r = client.repos.find
+
+        GithubMetrics.update_or_create(
+          { :pod_id => pod.id },
+          {
+            :subscribers => r.subscribers_count,
+            :stargazers => r.stargazers_count,
+            :forks => r.forks_count,
+            :contributors => client.repos.contributors.size,
+            :open_issues => r.open_issues_count,
+            :open_pull_requests => client.pull_requests.all.size
+            # first_commit
+            # last_commit
+          }
+        )
+      end
+    rescue ParseError
+      not_found(pod)
     rescue StandardError => e
       handle_update_error(e, pod)
     end
@@ -43,7 +51,7 @@ module Metrics
       METRICS_APP_LOGGER.error e
       case e.message
       when /404 Not Found/
-        not_found(pod) # Pod is also not found if we can't parse the git source URL.
+        not_found(pod)
       when /403 API rate limit exceeded/
         sleep 4000 # Wait until the rate limit is over.
       else
@@ -72,7 +80,9 @@ module Metrics
     #
     def parse(url)
       matches = url.match(%r{[:/](?<user>[^/]+)/(?<repo>[^/\.]+)(\.git)?\z})
-      [matches[:user], matches[:repo]] if matches
+      [matches[:user], matches[:repo]]
+    rescue StandardError => e
+      raise ParseError, "Can not parse Github URL."
     end
   end
 end

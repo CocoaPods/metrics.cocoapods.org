@@ -6,7 +6,8 @@ describe Metrics::Github do
 
   describe 'with a .git github URL' do
     before do
-      @github = Metrics::Github.new 'https://github.com/myusername/reponame.git'
+      @github = Metrics::Github.new
+      @github.initialize_client('https://github.com/myusername/reponame.git')
     end
     it 'has the right user' do
       @github.user.should == 'myusername'
@@ -18,7 +19,8 @@ describe Metrics::Github do
 
   describe 'with a non .git github URL' do
     before do
-      @github = Metrics::Github.new 'https://github.com/myusername/reponame'
+      @github = Metrics::Github.new
+      @github.initialize_client('https://github.com/myusername/reponame')
     end
     it 'has the right user' do
       @github.user.should == 'myusername'
@@ -30,7 +32,8 @@ describe Metrics::Github do
 
   describe 'with a private github URL' do
     before do
-      @github = Metrics::Github.new 'git@github.com/myusername/reponame.git'
+      @github = Metrics::Github.new
+      @github.initialize_client('git@github.com/myusername/reponame.git')
     end
     it 'has the right user' do
       @github.user.should == 'myusername'
@@ -42,7 +45,8 @@ describe Metrics::Github do
 
   describe 'with a ? github URL' do
     before do
-      @github = Metrics::Github.new 'git://github.com/myusername/reponame.git'
+      @github = Metrics::Github.new
+      @github.initialize_client('git://github.com/myusername/reponame.git')
     end
     it 'has the right user' do
       @github.user.should == 'myusername'
@@ -54,7 +58,8 @@ describe Metrics::Github do
 
   describe 'not_found' do
     before do
-      @github = Metrics::Github.new 'https://github.com/myusername/reponame.git'
+      @github = Metrics::Github.new
+      @github.initialize_client('https://github.com/myusername/reponame.git')
     end
     it 'updates not found on existing github metrics' do
       pod = Pod.create(:name => 'PodHasMetrics')

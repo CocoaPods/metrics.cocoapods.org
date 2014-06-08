@@ -43,11 +43,7 @@ module Metrics
     #
     def self.update(pods)
       pods.each do |pod|
-        if url = pod.github_url
-          github = Metrics::Github.new(url)
-          github.update(pod)
-          sleep 1
-        end
+        Metrics::Github.new.update(pod)
       end
     rescue StandardError
       sleep 10
