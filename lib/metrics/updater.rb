@@ -37,7 +37,7 @@ module Metrics
     rescue StandardError => e
       METRICS_APP_LOGGER.error e
       # TODO: Log.
-      sleep 4000 # Back off for more than an hour.
+      sleep e.message =~ /404/ ? 1 : 4000
     end
 
     def self.find_pods_without_github_metrics
