@@ -1,6 +1,6 @@
 Sequel.migration do
   change do
-    create_table(:github_metrics) do
+    create_table(:github_pod_metrics) do
       primary_key :id
       foreign_key :pod_id, :pods, :null => false, :key => [:id]
 
@@ -13,6 +13,8 @@ Sequel.migration do
 
       DateTime :first_commit, :null => true
       DateTime :last_commit, :null => true
+
+      Integer :not_found, :default => 0
 
       DateTime :created_at
       DateTime :updated_at

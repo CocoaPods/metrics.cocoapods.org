@@ -6,19 +6,19 @@ describe MetricsApp, '/api/v1/status' do
 
   before do
     pod = Pod.create(:name => 'TestPod1')
-    GithubMetrics.create(
+    GithubPodMetrics.create(
       :pod => pod,
       :stargazers => 12,
       :open_pull_requests => 1
     )
     pod = Pod.create(:name => 'TestPod2')
-    GithubMetrics.create(
+    GithubPodMetrics.create(
       :pod => pod,
       :stargazers => 1001,
       :open_pull_requests => 23
     )
     pod = Pod.create(:name => 'TestPod3')
-    GithubMetrics.create(
+    GithubPodMetrics.create(
       :pod => pod,
       :not_found => 2
     )

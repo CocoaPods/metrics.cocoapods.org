@@ -5,9 +5,9 @@ class MetricsApp < Sinatra::Base
   get '/api/v1/status' do
     {
       :github => {
-        :total => GithubMetrics.count,
-        :complete => GithubMetrics.where('not_found = 0').count,
-        :not_found => GithubMetrics.where('not_found > 0').count
+        :total => GithubPodMetrics.count,
+        :complete => GithubPodMetrics.where('not_found = 0').count,
+        :not_found => GithubPodMetrics.where('not_found > 0').count
       }
     }.to_json
   end
@@ -15,7 +15,7 @@ class MetricsApp < Sinatra::Base
   get '/api/v1/pods/:name' do
     pod = Pod.first(:name => params[:name])
     if pod
-      metrics = pod.github_metrics
+      metrics = pod.github_pod_metrics
       if metrics
         github_values = metrics.values
         github_values.delete(:id)

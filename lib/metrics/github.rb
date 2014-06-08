@@ -19,7 +19,7 @@ module Metrics
       ::Github.new(params)
     end
 
-    # Updates a GithubMetrics model with the latest Github data.
+    # Updates a GithubPodMetrics model with the latest Github data.
     #
     def update(pod)
       if url = pod.github_url
@@ -27,7 +27,7 @@ module Metrics
 
         r = client.repos.find
 
-        GithubMetrics.update_or_create(
+        GithubPodMetrics.update_or_create(
           { :pod_id => pod.id },
           {
             :subscribers => r.subscribers_count,
@@ -60,15 +60,15 @@ module Metrics
       end
     end
 
-    # Adds 1 to a GithubMetrics model's not found attribute.
+    # Adds 1 to a GithubPodMetrics model's not found attribute.
     #
     def not_found(pod)
-      metrics = pod.github_metrics
+      metrics = pod.github_pod_metrics
 
       if metrics
         metrics.update(:not_found => (metrics.not_found + 1))
       else
-        GithubMetrics.create(:pod_id => pod.id, :not_found => 1)
+        GithubPodMetrics.create(:pod_id => pod.id, :not_found => 1)
       end
     end
 

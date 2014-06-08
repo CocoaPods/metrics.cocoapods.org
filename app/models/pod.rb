@@ -5,8 +5,8 @@ require File.expand_path '../version', __FILE__
 #
 class Pod < Sequel::Model(:pods)
   # Currently adds:
-  #   * Pod#github_metrics (one_to_one)
-  #   * Pod.with_github_metrics
+  #   * Pod#github_pod_metrics (one_to_one)
+  #   * Pod.with_github_pod_metrics
   #
   include PodMetrics
 
@@ -20,12 +20,12 @@ class Pod < Sequel::Model(:pods)
     order(:updated_at).limit(amount)
   end
 
-  def self.without_github_metrics
-    with_github_metrics.where(:pod_id => nil)
+  def self.without_github_pod_metrics
+    with_github_pod_metrics.where(:pod_id => nil)
   end
 
-  def self.with_old_github_metrics
-    with_github_metrics.where('github_metrics.updated_at < ?', Date.today - 1)
+  def self.with_old_github_pod_metrics
+    with_github_pod_metrics.where('github_pod_metrics.updated_at < ?', Date.today - 1)
   end
 
   def specification_json

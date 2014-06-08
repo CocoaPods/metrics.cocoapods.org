@@ -63,7 +63,7 @@ describe Metrics::Github do
     end
     it 'updates not found on existing github metrics' do
       pod = Pod.create(:name => 'PodHasMetrics')
-      metrics = GithubMetrics.create(:pod_id => pod.id, :not_found => 2)
+      metrics = GithubPodMetrics.create(:pod_id => pod.id, :not_found => 2)
 
       @github.not_found(pod)
 
@@ -71,11 +71,11 @@ describe Metrics::Github do
     end
     it 'creates metrics with not found' do
       pod = Pod.create(:name => 'PodNoMetrics')
-      pod.github_metrics.nil?.should == true
+      pod.github_pod_metrics.nil?.should == true
 
       @github.not_found(pod)
 
-      pod.reload.github_metrics.not_found.should == 1
+      pod.reload.github_pod_metrics.not_found.should == 1
     end
   end
 
