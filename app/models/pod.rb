@@ -25,7 +25,7 @@ class Pod < Sequel::Model(:pods)
   end
 
   def self.with_old_github_metrics
-    with_github_metrics.where('github_metrics.updated_at < ?', Date.today - 3)
+    with_github_metrics.where('github_metrics.updated_at < ?', Date.today - 1)
   end
 
   def specification_json
