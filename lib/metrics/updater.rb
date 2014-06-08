@@ -12,12 +12,12 @@ module Metrics
     def self.run_child_process
       @child_id = fork do
         loop do
-          pods = find_pods_without_github_metrics.limit(10).all
+          pods = find_pods_without_github_metrics
           if pods.empty?
-            pods = find_pods_with_old_github_metrics.limit(10).all
+            pods = find_pods_with_old_github_metrics
           end
           if pods.empty?
-            next
+            sleep 10
           else
             update pods
           end
@@ -34,6 +34,7 @@ module Metrics
           github.update(pod)
         end
       end
+      sleep 10
     rescue StandardError => e
       METRICS_APP_LOGGER.error e
       # TODO: Log.
@@ -41,11 +42,11 @@ module Metrics
     end
 
     def self.find_pods_without_github_metrics
-      Pod.without_github_metrics
+      Pod.without_github_metrics.order(Sequel.lit('RANDOM()')).limit(10).all
     end
 
     def self.find_pods_with_old_github_metrics
-      Pod.with_old_github_metrics
+      Pod.with_old_github_metrics.order(Sequel.lit('RANDOM()')).limit(10).all
     end
 
     def self.stop
