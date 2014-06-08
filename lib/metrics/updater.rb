@@ -52,6 +52,8 @@ module Metrics
       Process.kill 'INT', @child_id if @child_id
     rescue
       'RuboCop: Do not suppress exceptions.'
+    ensure
+      Process.waitall
     end
   end
 end
