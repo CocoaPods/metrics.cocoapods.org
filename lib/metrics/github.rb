@@ -25,27 +25,31 @@ module Metrics
       if url = pod.github_url
         client = initialize_client(url)
 
-        r = client.repos.find
+        repo = client.repos.find
 
-        GithubPodMetrics.update_or_create(
-          { :pod_id => pod.id },
-          {
-            :subscribers => r.subscribers_count,
-            :stargazers => r.stargazers_count,
-            :forks => r.forks_count,
-            :contributors => client.repos.contributors.size,
-            :open_issues => r.open_issues_count,
-            :open_pull_requests => client.pull_requests.all.size
-            # first_commit
-            # last_commit
-          }
-        )
+        GithubPodMetrics.update_or_create({ :pod_id => pod.id }, update_hash(client, repo))
+
         sleep 1
+      else
+        not_found(pod)
       end
     rescue ParseError
       not_found(pod)
     rescue StandardError => e
       handle_update_error(e, pod)
+    end
+
+    def update_hash(client, repo)
+      {
+        :subscribers => repo.subscribers_count,
+        :stargazers => repo.stargazers_count,
+        :forks => repo.forks_count,
+        :contributors => client.repos.contributors.size,
+        :open_issues => repo.open_issues_count,
+        :open_pull_requests => client.pull_requests.all.size
+        # first_commit
+        # last_commit
+      }
     end
 
     def handle_update_error(e, pod)
@@ -70,6 +74,11 @@ module Metrics
       else
         GithubPodMetrics.create(:pod_id => pod.id, :not_found => 1)
       end
+    end
+
+    def reset_not_found(pod)
+      metrics = pod.github_pod_metrics
+      metrics.update(:not_found => 0) if metrics
     end
 
     private

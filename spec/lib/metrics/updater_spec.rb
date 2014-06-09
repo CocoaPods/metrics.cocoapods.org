@@ -48,4 +48,23 @@ describe Metrics::Updater do
     end
   end
 
+  describe '.reset' do
+    it 'resets not found on existing github metrics' do
+      pod = Pod.create(:name => 'PodHasMetrics')
+      metrics = GithubPodMetrics.create(:pod_id => pod.id, :not_found => 2)
+
+      Metrics::Updater.reset(pod)
+
+      metrics.reload.not_found.should == 0
+    end
+    it 'ignores metrics with no not found' do
+      pod = Pod.create(:name => 'PodNoMetrics')
+      pod.github_pod_metrics.nil?.should == true
+
+      Metrics::Updater.reset(pod)
+
+      pod.github_pod_metrics.nil?.should == true
+    end
+  end
+
 end

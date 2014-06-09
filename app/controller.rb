@@ -26,11 +26,19 @@ class MetricsApp < Sinatra::Base
     {}.to_json
   end
 
-  # Install trunk hook path for both GET (comfy manual) and POST (ping from trunk).
+  # Install trunk hook path for POST (ping from trunk).
   #
-  %w(get post).each do |type|
-    send(type, "/hooks/trunk/#{ENV['INCOMING_TRUNK_HOOK_PATH']}") do
-      'Metrics ok.'
-    end
+  post "/hooks/trunk/#{ENV['INCOMING_TRUNK_HOOK_PATH']}" do
+    # TODO: fork
+    #
+    # data = JSON.parse(params['message'])
+    # data_url = data['data_url']
+    #
+    # TODO: Extract name.
+    #
+    # pod = Pod.first(:name => name)
+    # Metrics::Updater.reset(pod)
+
+    'Metrics ok.'
   end
 end

@@ -34,8 +34,6 @@ module Metrics
 
     # Update each pod.
     #
-    # TODO: Refactor.
-    #
     def self.update(pods)
       pods.each do |pod|
         Metrics::Github.new.update(pod)
@@ -43,6 +41,14 @@ module Metrics
       end
     rescue StandardError
       sleep 10
+    end
+
+    # Instruct updater to re-evaluate pod.
+    #
+    # This should reset all e.g. not_found counters.
+    #
+    def self.reset(pod)
+      Metrics::Github.new.reset_not_found(pod)
     end
 
     def self.find_pods_without_github_pod_metrics(update_amount = amount)
