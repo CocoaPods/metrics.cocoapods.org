@@ -31,6 +31,8 @@ module Metrics
 
         sleep 1
       else
+        # Not having a Github URL counts as not found in the Github context.
+        #
         not_found(pod)
       end
     rescue ParseError
