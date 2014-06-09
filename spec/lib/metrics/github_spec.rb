@@ -56,6 +56,19 @@ describe Metrics::Github do
     end
   end
 
+  describe 'with an error case' do
+    before do
+      @github = Metrics::Github.new
+      @github.initialize_client('https://github.com/RestKit/RestKit.git')
+    end
+    it 'has the right user' do
+      @github.user.should == 'RestKit'
+    end
+    it 'has the right repo' do
+      @github.repo.should == 'RestKit'
+    end
+  end
+
   describe 'not_found' do
     before do
       @github = Metrics::Github.new

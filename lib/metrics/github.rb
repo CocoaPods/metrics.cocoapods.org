@@ -29,6 +29,8 @@ module Metrics
 
         GithubPodMetrics.update_or_create({ :pod_id => pod.id }, update_hash(client, repo))
 
+        reset_not_found(pod)
+
         sleep 1
       else
         # Not having a Github URL counts as not found in the Github context.
@@ -49,8 +51,6 @@ module Metrics
         :contributors => client.repos.contributors.size,
         :open_issues => repo.open_issues_count,
         :open_pull_requests => client.pull_requests.all.size
-        # first_commit
-        # last_commit
       }
     end
 
