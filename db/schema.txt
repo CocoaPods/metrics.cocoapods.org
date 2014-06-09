@@ -130,8 +130,6 @@ github_pod_metrics
 | contributors       | 23   | "integer"                     | nil                                              | true       | false       | :integer  | nil          |
 | open_issues        | 23   | "integer"                     | nil                                              | true       | false       | :integer  | nil          |
 | open_pull_requests | 23   | "integer"                     | nil                                              | true       | false       | :integer  | nil          |
-| first_commit       | 1114 | "timestamp without time zone" | nil                                              | true       | false       | :datetime | nil          |
-| last_commit        | 1114 | "timestamp without time zone" | nil                                              | true       | false       | :datetime | nil          |
 | not_found          | 23   | "integer"                     | "0"                                              | true       | false       | :integer  | 0            |
 | created_at         | 1114 | "timestamp without time zone" | nil                                              | true       | false       | :datetime | nil          |
 | updated_at         | 1114 | "timestamp without time zone" | nil                                              | true       | false       | :datetime | nil          |
