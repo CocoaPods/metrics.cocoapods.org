@@ -64,9 +64,5 @@ end
 
 if defined?(IRB)
   puts "[!] Loading `#{ENV['RACK_ENV']}' environment."
-  Dir.chdir(ROOT) do
-    Dir.glob('app/models/*.rb').each do |model|
-      require model[0..-4]
-    end
-  end
+  Dir.chdir(ROOT) { require 'app/models' }
 end
