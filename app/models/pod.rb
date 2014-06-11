@@ -29,7 +29,7 @@ class Pod < Sequel::Model(:pods)
   end
 
   def specification_json
-    version = versions.last
+    version = versions.sort_by { |version| Gem::Version.new(version.name) }.last
     commit = version.commits.last if version
     commit.specification_data if commit
   end

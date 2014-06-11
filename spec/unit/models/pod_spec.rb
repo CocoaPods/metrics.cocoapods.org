@@ -4,6 +4,19 @@ require File.expand_path('../../../../app/models/pod', __FILE__)
 
 describe Pod do
 
+  describe '#specification_json' do
+    before do
+      @pod = Pod.create(:name => 'TestPod1')
+      version = @pod.add_version(:name => '1.10.0')
+      version.add_commit(:sha => 'shalalalala', :committer_id => 1, :specification_data => '1.10.0')
+      version = @pod.add_version(:name => '1.9.0')
+      version.add_commit(:sha => 'shalalalala', :committer_id => 1, :specification_data => '1.9.0')
+    end
+    it 'returns the data of the last version' do
+      @pod.specification_json.should == '1.10.0'
+    end
+  end
+
   describe '.with_github_pod_metrics' do
     before do
       @pod = Pod.create(:name => 'TestPod1')
