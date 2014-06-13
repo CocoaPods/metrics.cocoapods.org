@@ -42,8 +42,8 @@ describe MetricsApp, '/api/v1/pods/:name' do
     last_response.status.should == 200
     JSON.parse(last_response.body).should == {
       'github' => {
-        'id' => @metrics.id,
-        'pod_id' => @pod.id,
+        # 'id' => @metrics.id,
+        # 'pod_id' => @pod.id,
         'subscribers' => 404,
         'stargazers' => 6322,
         'forks' => 1532,
