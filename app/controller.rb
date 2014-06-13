@@ -18,8 +18,11 @@ class MetricsApp < Sinatra::Base
       metrics = pod.github_pod_metrics
       if metrics
         github_values = metrics.values
-        github_values.delete(:id)
-        github_values.delete(:pod_id)
+        unless params[:debug]
+          github_values.delete(:id)
+          github_values.delete(:pod_id)
+          github_values.delete(:not_found)
+        end
         return { :github => github_values }.to_json
       end
     end
