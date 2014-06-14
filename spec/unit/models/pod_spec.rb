@@ -75,14 +75,27 @@ describe Pod do
   end
 
   describe '.with_old_github_pod_metrics' do
-    before do
-      metrics_pod = Pod.create(:name => 'PodWith1')
-      GithubPodMetrics.create(:pod => metrics_pod, :updated_at => Date.today)
-      metrics_pod = Pod.create(:name => 'PodWith2')
-      GithubPodMetrics.create(:pod => metrics_pod, :updated_at => Date.parse('2013-12-12'))
+    describe 'with updated_at' do
+      before do
+        metrics_pod = Pod.create(:name => 'PodWith1')
+        GithubPodMetrics.create(:pod => metrics_pod, :updated_at => Date.today)
+        metrics_pod = Pod.create(:name => 'PodWith2')
+        GithubPodMetrics.create(:pod => metrics_pod, :updated_at => Date.parse('2013-12-12'))
+      end
+      it 'returns the least recently updated X pods' do
+        Pod.with_old_github_pod_metrics.all.map(&:name).should == %w(PodWith2)
+      end
     end
-    it 'returns the least recently updated X pods' do
-      Pod.with_old_github_pod_metrics.all.map(&:name).should == %w(PodWith2)
+    describe 'without updated_at' do
+      before do
+        metrics_pod = Pod.create(:name => 'PodWith1')
+        GithubPodMetrics.create(:pod => metrics_pod)
+        metrics_pod = Pod.create(:name => 'PodWith2')
+        GithubPodMetrics.create(:pod => metrics_pod, :updated_at => Date.parse('2345-12-12'))
+      end
+      it 'returns the least recently updated X pods' do
+        Pod.with_old_github_pod_metrics.all.map(&:name).should == %w(PodWith1)
+      end
     end
   end
 

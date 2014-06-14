@@ -25,11 +25,14 @@ class Pod < Sequel::Model(:pods)
   end
 
   def self.with_old_github_pod_metrics
-    with_github_pod_metrics.where('github_pod_metrics.updated_at <= ?', Date.today - 1)
+    with_github_pod_metrics.where(
+      'github_pod_metrics.updated_at <= ? OR github_pod_metrics.updated_at IS NULL',
+      Date.today - 1
+    )
   end
 
   def specification_json
-    # TODO: This is an intermediate solution to a larger problem. Ask Florian.
+    # TODO: Also sort Commits correctly.
     #
     version = versions.sort_by { |v| Gem::Version.new(v.name) }.last
     commit = version.commits.last if version
