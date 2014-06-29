@@ -5,7 +5,7 @@ require File.expand_path('../../../lib/metrics/updater', __FILE__)
 describe MetricsApp, 'when receiving hook calls from trunk' do
 
   def post_spec_update
-    post '/hooks/trunk/', 'message={"pod":"pod_name","version":"1.0.0","commit":"abcd"}'
+    post '/hooks/trunk/', '{"pod":"pod_name","version":"1.0.0","commit":"abcd"}'
   end
 
   it 'succeeds without a pod' do
