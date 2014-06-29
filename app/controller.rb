@@ -30,7 +30,7 @@ class MetricsApp < Sinatra::Base
   # Install trunk hook path for POST (ping from trunk).
   #
   post "/hooks/trunk/#{ENV['INCOMING_TRUNK_HOOK_PATH']}" do
-    data = JSON.parse(params['message'])
+    data = JSON.parse(request.body.read)
     pod = Pod.first(:name => data['pod'])
     Metrics::Updater.reset(pod) if pod
 
