@@ -12,16 +12,19 @@ class MetricsApp < Sinatra::Base
     }.to_json
   end
 
-  get '/api/v1/pods/:name' do
-    pod = Pod.first(:name => params[:name])
-    if pod
-      metrics = pod.github_pod_metrics
-      if metrics
-        github_values = metrics.values
-        github_values.delete(:id)
-        github_values.delete(:pod_id)
-        github_values.delete(:not_found) unless params[:debug]
-        return { :github => github_values }.to_json
+  get '/api/v1/pods/:name.?:format?' do
+    format = params[:format]
+    if !format || format == 'json'
+      pod = Pod.first(:name => params[:name])
+      if pod
+        metrics = pod.github_pod_metrics
+        if metrics
+          github_values = metrics.values
+          github_values.delete(:id)
+          github_values.delete(:pod_id)
+          github_values.delete(:not_found) unless params[:debug]
+          return { :github => github_values }.to_json
+        end
       end
     end
     {}.to_json
