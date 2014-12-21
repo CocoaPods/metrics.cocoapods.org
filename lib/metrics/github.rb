@@ -91,8 +91,8 @@ module Metrics
     #   lakesoft and LKAssetsLibrary
     #
     def parse(url)
-      matches = url.match(%r{[:/](?<user>[^/]+)/(?<repo>[^/\.]+)(\.git)?\z})
-      [matches[:user], matches[:repo]]
+      matches = url.match(%r{[:/](?<user>[^/]+)/(?<repo>[^/]+)\z})
+      [matches[:user], matches[:repo].gsub(/\.git\z/, '')]
     rescue StandardError => e
       raise ParseError, 'Can not parse Github URL.'
     end
