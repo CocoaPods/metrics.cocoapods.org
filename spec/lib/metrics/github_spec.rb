@@ -4,6 +4,21 @@ require File.expand_path('../../../../lib/metrics/github', __FILE__)
 
 describe Metrics::Github do
 
+  describe 'with a dot in the repository name' do
+    before do
+      @github = Metrics::Github.new
+      @github.initialize_client('https://github.com/kylef/URITemplate.swift.git')
+    end
+
+    it 'has the right user' do
+      @github.user.should == 'kylef'
+    end
+
+    it 'has the right repo' do
+      @github.repo.should == 'URITemplate.swift'
+    end
+  end
+
   describe 'with a .git github URL' do
     before do
       @github = Metrics::Github.new
