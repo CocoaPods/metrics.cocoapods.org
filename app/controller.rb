@@ -29,6 +29,13 @@ class MetricsApp < Sinatra::Base
     end
     {}.to_json
   end
+  
+  post "/api/v1/pods/:name/reset/#{ENV['INCOMING_TRUNK_HOOK_PATH']}" do
+    pod = Pod.first(:name => params[:name])
+    if pod
+      Metrics::Github.new.reset_not_found(pod)
+    end
+  end
 
   # Install trunk hook path for POST (ping from trunk).
   #
