@@ -33,8 +33,11 @@ class MetricsApp < Sinatra::Base
   post "/api/v1/pods/:name/reset/#{ENV['INCOMING_TRUNK_HOOK_PATH']}" do
     pod = Pod.first(:name => params[:name])
     if pod
-      Metrics::Github.new.reset_not_found(pod)
-      "#{pod.name} reset."
+      if Metrics::Github.new.reset_not_found(pod)
+        "#{pod.name} reset." 
+      else
+        "#{pod.name} not reset."
+      end
     end
   end
 
