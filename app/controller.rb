@@ -34,6 +34,8 @@ class MetricsApp < Sinatra::Base
     pod = Pod.first(:name => params[:name])
     if pod
       if Metrics::Github.new.reset_not_found(pod)
+        # Also directly try to update.
+        Metrics::Github.new.update(pod)
         "#{pod.name} reset." 
       else
         "#{pod.name} not reset."
