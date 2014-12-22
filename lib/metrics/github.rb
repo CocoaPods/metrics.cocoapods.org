@@ -80,7 +80,10 @@ module Metrics
 
     def reset_not_found(pod)
       metrics = pod.github_pod_metrics
-      metrics.update(:not_found => 0) if metrics
+      if metrics
+        metrics.update(:not_found => 0)
+        metrics
+      end
     end
 
     private
