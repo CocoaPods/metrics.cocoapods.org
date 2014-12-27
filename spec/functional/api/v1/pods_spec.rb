@@ -14,6 +14,7 @@ describe MetricsApp, '/api/v1/pods/:name' do
       :contributors => 30,
       :open_issues => 227,
       :open_pull_requests => 30,
+      :language => 'Objective-C',
       :not_found => 1,
       :created_at => '2014-06-11 16:40:13 UTC',
       :updated_at => nil
@@ -31,6 +32,7 @@ describe MetricsApp, '/api/v1/pods/:name' do
         'contributors' => 30,
         'open_issues' => 227,
         'open_pull_requests' => 30,
+        'language' => 'Objective-C',
         'created_at' => '2014-06-11 16:40:13 UTC',
         'updated_at' => nil
       }
@@ -51,6 +53,7 @@ describe MetricsApp, '/api/v1/pods/:name' do
         'open_issues' => 227,
         'open_pull_requests' => 30,
         'not_found' => 1,
+        'language' => 'Objective-C',
         'created_at' => '2014-06-11 16:40:13 UTC',
         'updated_at' => nil
       }
