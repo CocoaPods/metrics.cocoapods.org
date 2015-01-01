@@ -50,7 +50,8 @@ module Metrics
         :forks => repo.forks_count,
         :contributors => client.repos.contributors.size,
         :open_issues => repo.open_issues_count,
-        :open_pull_requests => client.pull_requests.all.size
+        :open_pull_requests => client.pull_requests.all.size,
+        :language => repo.language
       }
     end
 
