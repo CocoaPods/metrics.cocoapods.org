@@ -2,6 +2,8 @@ require 'sinatra/base'
 require 'app/models'
 
 class MetricsApp < Sinatra::Base
+  set :protection, :except => :json_csrf
+  
   def sanitize_metrics(metrics, debug = false)
     return unless metrics
     metrics = metrics.values.dup
