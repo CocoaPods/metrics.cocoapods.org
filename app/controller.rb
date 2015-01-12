@@ -11,6 +11,18 @@ class MetricsApp < Sinatra::Base
     metrics
   end
 
+  before do
+    type = content_type(:json)
+  end
+
+  def json_error(status, message)
+    error(status, { 'error' => message }.to_json)
+  end
+
+  def json_message(status, content)
+    halt(status, content.to_json)
+  end
+
   get '/api/v1/status' do
     {
       :github => {
@@ -32,14 +44,15 @@ class MetricsApp < Sinatra::Base
         github_metrics = pod.github_pod_metrics
         cocoadocs_metrics = pod.cocoadocs_pod_metrics
         if github_metrics || cocoadocs_metrics
-          return {
+          json_message(
+            200,
             :github => sanitize_metrics(github_metrics, params[:debug]),
             :cocoadocs => sanitize_metrics(cocoadocs_metrics, params[:debug]),
-          }.to_json
+          )
         end
       end
     end
-    {}.to_json
+    json_error(404, 'No pod found with the specified name.')
   end
 
   post "/api/v1/pods/:name/reset/#{ENV['INCOMING_TRUNK_HOOK_PATH']}" do

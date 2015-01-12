@@ -41,6 +41,7 @@ describe MetricsApp, '/api/v1/pods/:name' do
   it 'returns the right details' do
     get "/api/v1/pods/#{@pod.name}"
     last_response.status.should == 200
+    last_response.content_type.should == 'application/json'
     JSON.parse(last_response.body).should == {
       'github' => {
         'subscribers' => 404,
