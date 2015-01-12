@@ -46,6 +46,7 @@ class Pod < Sequel::Model(:pods)
   def github_url
     data = specification_data
     source = data['source'] || {}
-    source['git']
+    git = source['git']
+    git if git =~ %r{github.com[:/]+.*/.*}
   end
 end
