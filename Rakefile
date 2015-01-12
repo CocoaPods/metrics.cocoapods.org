@@ -43,7 +43,7 @@ begin
 
   task :default => :spec
 
-#-- Rubocop -------------------------------------------------------------------
+  #-- Rubocop -------------------------------------------------------------------
 
   begin
     require 'rubocop/rake_task'
@@ -52,7 +52,7 @@ begin
       task.fail_on_error = true
     end
   rescue LoadError
-    puts "[!] The Rubocop tasks have been disabled"
+    puts '[!] The Rubocop tasks have been disabled'
   end
 
 rescue SystemExit, LoadError => e

@@ -6,7 +6,7 @@ describe MetricsApp, '/api/v1/pods/:name' do
 
   before do
     @pod = Pod.create(:name => 'TestPod1')
-    @metrics = GithubPodMetrics.create(
+    @github_metrics = GithubPodMetrics.create(
       :pod => @pod,
       :subscribers => 404,
       :stargazers => 6322,
@@ -18,6 +18,23 @@ describe MetricsApp, '/api/v1/pods/:name' do
       :not_found => 1,
       :created_at => '2014-06-11 16:40:13 UTC',
       :updated_at => nil
+    )
+    @cocoadocs_metrics = CocoadocsPodMetrics.create(
+      :pod => @pod,
+      :download_size => 80_220,
+      :total_files => 130,
+      :total_comments => 10_297,
+      :total_lines_of_code => 27_637,
+      :doc_percent => 71,
+      :readme_complexity => 40,
+      :initial_commit_date => '2015-01-02 10:53:59 UTC',
+      :rendered_readme_url => 'http://cocoadocs.org/docsets/Realm/0.89.2/README.html',
+      :not_found => 0,
+      :created_at => '2015-01-12 00:23:51 UTC',
+      :updated_at => '2015-01-12 00:48:25 UTC',
+      :license_short_name => 'Apache 2',
+      :license_canonical_url => 'https://www.apache.org/licenses/LICENSE-2.0.html',
+      :total_test_expectations => 4397
     )
   end
 
@@ -35,6 +52,21 @@ describe MetricsApp, '/api/v1/pods/:name' do
         'language' => 'Objective-C',
         'created_at' => '2014-06-11 16:40:13 UTC',
         'updated_at' => nil
+      },
+      'cocoadocs' => {
+        'download_size' => 80_220,
+        'total_files' => 130,
+        'total_comments' => 10_297,
+        'total_lines_of_code' => 27_637,
+        'doc_percent' => 71,
+        'readme_complexity' => 40,
+        'initial_commit_date' => '2015-01-02 10:53:59 UTC',
+        'rendered_readme_url' => 'http://cocoadocs.org/docsets/Realm/0.89.2/README.html',
+        'created_at' => '2015-01-12 00:23:51 UTC',
+        'updated_at' => '2015-01-12 00:48:25 UTC',
+        'license_short_name' => 'Apache 2',
+        'license_canonical_url' => 'https://www.apache.org/licenses/LICENSE-2.0.html',
+        'total_test_expectations' => 4397
       }
     }
   end
@@ -56,6 +88,22 @@ describe MetricsApp, '/api/v1/pods/:name' do
         'language' => 'Objective-C',
         'created_at' => '2014-06-11 16:40:13 UTC',
         'updated_at' => nil
+      },
+      'cocoadocs' => {
+        'download_size' => 80_220,
+        'total_files' => 130,
+        'total_comments' => 10_297,
+        'total_lines_of_code' => 27_637,
+        'doc_percent' => 71,
+        'readme_complexity' => 40,
+        'initial_commit_date' => '2015-01-02 10:53:59 UTC',
+        'rendered_readme_url' => 'http://cocoadocs.org/docsets/Realm/0.89.2/README.html',
+        'not_found' => 0,
+        'created_at' => '2015-01-12 00:23:51 UTC',
+        'updated_at' => '2015-01-12 00:48:25 UTC',
+        'license_short_name' => 'Apache 2',
+        'license_canonical_url' => 'https://www.apache.org/licenses/LICENSE-2.0.html',
+        'total_test_expectations' => 4397
       }
     }
   end
