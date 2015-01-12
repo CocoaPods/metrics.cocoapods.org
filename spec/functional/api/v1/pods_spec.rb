@@ -21,10 +21,10 @@ describe MetricsApp, '/api/v1/pods/:name' do
     )
     @cocoadocs_metrics = CocoadocsPodMetrics.create(
       :pod => @pod,
-      :download_size => 80220,
+      :download_size => 80_220,
       :total_files => 130,
-      :total_comments => 10297,
-      :total_lines_of_code => 27637,
+      :total_comments => 10_297,
+      :total_lines_of_code => 27_637,
       :doc_percent => 71,
       :readme_complexity => 40,
       :initial_commit_date => '2015-01-02 10:53:59 UTC',
@@ -34,7 +34,7 @@ describe MetricsApp, '/api/v1/pods/:name' do
       :updated_at => '2015-01-12 00:48:25 UTC',
       :license_short_name => 'Apache 2',
       :license_canonical_url => 'https://www.apache.org/licenses/LICENSE-2.0.html',
-      :total_test_expectations => '4397'
+      :total_test_expectations => 4397
     )
   end
 
@@ -54,10 +54,10 @@ describe MetricsApp, '/api/v1/pods/:name' do
         'updated_at' => nil
       },
       'cocoadocs' => {
-        'download_size' => 80220,
+        'download_size' => 80_220,
         'total_files' => 130,
-        'total_comments' => 10297,
-        'total_lines_of_code' => 27637,
+        'total_comments' => 10_297,
+        'total_lines_of_code' => 27_637,
         'doc_percent' => 71,
         'readme_complexity' => 40,
         'initial_commit_date' => '2015-01-02 10:53:59 UTC',
@@ -66,7 +66,7 @@ describe MetricsApp, '/api/v1/pods/:name' do
         'updated_at' => '2015-01-12 00:48:25 UTC',
         'license_short_name' => 'Apache 2',
         'license_canonical_url' => 'https://www.apache.org/licenses/LICENSE-2.0.html',
-        'total_test_expectations' => '4397'
+        'total_test_expectations' => 4397
       }
     }
   end
@@ -90,10 +90,10 @@ describe MetricsApp, '/api/v1/pods/:name' do
         'updated_at' => nil
       },
       'cocoadocs' => {
-        'download_size' => 80220,
+        'download_size' => 80_220,
         'total_files' => 130,
-        'total_comments' => 10297,
-        'total_lines_of_code' => 27637,
+        'total_comments' => 10_297,
+        'total_lines_of_code' => 27_637,
         'doc_percent' => 71,
         'readme_complexity' => 40,
         'initial_commit_date' => '2015-01-02 10:53:59 UTC',
@@ -103,7 +103,7 @@ describe MetricsApp, '/api/v1/pods/:name' do
         'updated_at' => '2015-01-12 00:48:25 UTC',
         'license_short_name' => 'Apache 2',
         'license_canonical_url' => 'https://www.apache.org/licenses/LICENSE-2.0.html',
-        'total_test_expectations' => '4397'
+        'total_test_expectations' => 4397
       }
     }
   end
