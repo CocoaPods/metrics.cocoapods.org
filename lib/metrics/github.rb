@@ -50,7 +50,8 @@ module Metrics
         :forks => repo.forks_count,
         :contributors => client.repos.contributors.size,
         :open_issues => repo.open_issues_count,
-        :open_pull_requests => client.pull_requests.all.size
+        :open_pull_requests => client.pull_requests.all.size,
+        :language => repo.language
       }
     end
 
@@ -80,7 +81,10 @@ module Metrics
 
     def reset_not_found(pod)
       metrics = pod.github_pod_metrics
-      metrics.update(:not_found => 0) if metrics
+      if metrics
+        metrics.update(:not_found => 0)
+        metrics
+      end
     end
 
     private
@@ -91,8 +95,8 @@ module Metrics
     #   lakesoft and LKAssetsLibrary
     #
     def parse(url)
-      matches = url.match(%r{[:/](?<user>[^/]+)/(?<repo>[^/\.]+)(\.git)?\z})
-      [matches[:user], matches[:repo]]
+      matches = url.match(%r{[:/](?<user>[^/]+)/(?<repo>[^/]+)\z})
+      [matches[:user], matches[:repo].gsub(/\.git\z/, '')]
     rescue StandardError => e
       raise ParseError, 'Can not parse Github URL.'
     end

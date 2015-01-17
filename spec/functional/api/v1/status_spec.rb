@@ -11,16 +11,25 @@ describe MetricsApp, '/api/v1/status' do
       :stargazers => 12,
       :open_pull_requests => 1
     )
+    CocoadocsPodMetrics.create(
+      :pod => pod
+    )
     pod = Pod.create(:name => 'TestPod2')
     GithubPodMetrics.create(
       :pod => pod,
       :stargazers => 1001,
       :open_pull_requests => 23
     )
+    CocoadocsPodMetrics.create(
+      :pod => pod
+    )
     pod = Pod.create(:name => 'TestPod3')
     GithubPodMetrics.create(
       :pod => pod,
       :not_found => 2
+    )
+    CocoadocsPodMetrics.create(
+      :pod => pod
     )
   end
 
@@ -32,6 +41,9 @@ describe MetricsApp, '/api/v1/status' do
         'total' => 3,
         'complete' => 2,
         'not_found' => 1
+      },
+      'cocoadocs' => {
+        'total' => 3
       }
     }
   end

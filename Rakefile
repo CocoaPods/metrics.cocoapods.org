@@ -17,44 +17,6 @@ begin
     ENV['RACK_ENV'] ||= 'development'
   end
 
-  namespace :db do
-    def schema
-      require 'terminal-table'
-      result = ''
-      DB.tables.each do |table|
-        result << "#{table}\n"
-        schema = DB.schema(table)
-        terminal_table = Terminal::Table.new(
-          headings: [:name, *schema[0][1].keys],
-          rows: schema.map { |c| [c[0], *c[1].values.map(&:inspect)] }
-        )
-        result << "#{terminal_table}\n\n"
-      end
-      result
-    end
-
-    desc 'Show schema'
-    task schema: :env do
-      puts schema
-    end
-
-    desc 'Run migrations'
-    task :migrate => :rack_env do
-      ENV['METRICS_APP_LOG_TO_STDOUT'] = 'true'
-      Rake::Task[:env].invoke
-      version = ENV['VERSION'].to_i if ENV['VERSION']
-      Sequel::Migrator.run(
-        DB,
-        File.join(ROOT, 'db/migrations'),
-        :target => version,
-        # This enables us to have separate migrations
-        # for each app.
-        :table => :schema_info_metrics
-      )
-      File.open('db/schema.txt', 'w') { |file| file.write(schema) }
-    end
-  end
-
   desc 'Starts a interactive console with the model env loaded'
   task :console do
     exec 'irb', '-I', File.expand_path('../', __FILE__), '-r', 'config/init'
@@ -81,16 +43,16 @@ begin
 
   task :default => :spec
 
-#-- Rubocop -------------------------------------------------------------------
+  #-- Rubocop -------------------------------------------------------------------
 
   begin
     require 'rubocop/rake_task'
     Rubocop::RakeTask.new(:rubocop) do |task|
-      task.patterns = FileList['{app,config,db,lib,spec}/**/*.rb']
+      task.patterns = FileList['{app,config,lib,spec}/**/*.rb']
       task.fail_on_error = true
     end
   rescue LoadError
-    puts "[!] The Rubocop tasks have been disabled"
+    puts '[!] The Rubocop tasks have been disabled'
   end
 
 rescue SystemExit, LoadError => e
