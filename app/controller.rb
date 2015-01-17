@@ -2,6 +2,10 @@ require 'sinatra/base'
 require 'app/models'
 
 class MetricsApp < Sinatra::Base
+  get '/' do
+    redirect '/api/v1/status'
+  end
+
   get '/api/v1/status' do
     {
       :github => {

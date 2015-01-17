@@ -26,4 +26,11 @@ describe MetricsApp, 'when receiving hook calls from trunk' do
     last_response.status.should == 200
   end
 
+  it 'redirects root to status' do
+    get "/"
+    follow_redirect!
+    last_request.url.should == "http://example.org/api/v1/status"
+  end
+
+
 end
