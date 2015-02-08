@@ -2,7 +2,7 @@ require 'github_api'
 
 module Metrics
   class Github
-    NUMBER_OF_PAGES_FOR_TOTAL_COUNT = 10
+    ITEMS_PER_PAGE = 10
 
     attr_reader :user, :repo
 
@@ -109,21 +109,21 @@ module Metrics
     def total_count_of(collection, client)
       case collection
       when :contributors
-        result = client.repos.contributors(per_page: NUMBER_OF_PAGES_FOR_TOTAL_COUNT)
+        result = client.repos.contributors(:per_page => ITEMS_PER_PAGE)
       when :open_pull_requests
         result = client.pull_requests.all(:state => 'open',
-                                          :per_page => NUMBER_OF_PAGES_FOR_TOTAL_COUNT)
+                                          :per_page => ITEMS_PER_PAGE)
       else
         raise 'Unsupported collection'
       end
 
       # Stop early if the first page contained all items
-      return result.size if result.size < NUMBER_OF_PAGES_FOR_TOTAL_COUNT
+      return result.size if result.size < ITEMS_PER_PAGE
       page_count = result.count_pages
 
       last = result.last_page
 
-      NUMBER_OF_PAGES_FOR_TOTAL_COUNT * (page_count - 1) + last.size
+      ITEMS_PER_PAGE * (page_count - 1) + last.size
     end
 
     def build_rate_limit_error(headers)
