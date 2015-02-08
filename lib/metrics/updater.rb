@@ -43,7 +43,7 @@ module Metrics
     rescue RateLimitError => e
       if e.resets_at
         sleep_time = (e.resets_at - Time.now.to_i) + 10
-        sleep sleep_time
+        sleep sleep_time if sleep_time > 0
       else
         sleep 4000
       end
