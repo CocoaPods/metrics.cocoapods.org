@@ -3,6 +3,7 @@ require 'pretty_bacon'
 
 require 'rack/test'
 require 'digest'
+require 'webmock'
 
 require 'mocha-on-bacon'
 Mocha::Configuration.prevent(:stubbing_non_existent_method)
@@ -18,6 +19,8 @@ Dir.glob(File.join(ROOT, 'spec/spec_helper/**/*.rb')).each do |filename|
 end
 
 class Bacon::Context
+  include WebMock::API
+
   def test_controller!(app)
     extend Rack::Test::Methods
 
@@ -34,6 +37,15 @@ class Bacon::Context
       run_requirement_before_sequel(description, spec)
     end
   end
+
+  alias_method :after_webmock, :after
+  def after(&block)
+    after_webmock do
+      block.call()
+      WebMock.reset!
+    end
+  end
+
 end
 module Kernel
   alias_method :describe_before_controller_tests, :describe

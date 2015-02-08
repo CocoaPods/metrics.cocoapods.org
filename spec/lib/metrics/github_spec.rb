@@ -129,4 +129,22 @@ describe Metrics::Github do
     end
   end
 
+  describe '.update' do
+    before do
+      @pod = Pod.create(:name => 'AFNetworking')
+      GithubPodMetrics.create(:pod => pod)
+
+      @github = Metrics::Github.new
+    end
+
+    it 'raises RateLimitError when rate limiting is in effect' do
+      rate_limited_reponse = File.read('../../fixtures/repos_afnetworking_rate_limit.json')
+      stub_request(:get, 'https://api.github.com/repos/AFNetworking/AFNetworking')
+      .to_return(rate_limited_reponse)
+
+      @github.update(@pod).should raise(RateLimitError)
+    end
+  end
+
+
 end
