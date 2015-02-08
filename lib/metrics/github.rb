@@ -73,11 +73,7 @@ module Metrics
       when /403 API rate limit exceeded/
         headers = ::Github::Response::Headers.new response_headers: e.http_headers
 
-        resets_at = headers.ratelimit_reset
-        limit = headers.ratelimit_limit
-
-        resets_at = 4000 if resets_at.nil?
-        raise RateLimitError.new(limit, resets_at)
+        raise build_rate_limit_error(headers)
       else
         raise
       end
@@ -85,10 +81,7 @@ module Metrics
 
     def check_rate_limiting(response)
       remaining = response.headers.ratelimit_remaining
-      reset = response.headers.ratelimit_reset
-      limit = response.headers.ratelimit_limit
-
-      raise RateLimitError.new(limit, reset) if remaining.to_i <= 0
+      raise build_rate_limit_error(response.headers) if remaining.nil? || remaining.to_i <= 0
     end
 
     # Adds 1 to a GithubPodMetrics model's not found attribute.
@@ -131,6 +124,14 @@ module Metrics
       last = result.last_page
 
       NUMBER_OF_PAGES_FOR_TOTAL_COUNT * (page_count - 1) + last.size
+    end
+
+    def build_rate_limit_error(headers)
+      resets_at = headers.ratelimit_reset.to_i
+      limit = headers.ratelimit_limit.to_i
+
+      resets_at = Time.now.to_i + 4000 if resets_at == 0
+      raise RateLimitError.new(limit, resets_at)
     end
 
     # Takes a URL like
