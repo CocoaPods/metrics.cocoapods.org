@@ -14,7 +14,7 @@ gem 'sass'
 
 # API libraries.
 #
-gem 'github_api'
+gem 'github_api', '~> 0.12.3'
 
 group :rake do
   gem 'rake'
