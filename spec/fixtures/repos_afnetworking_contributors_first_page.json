@@ -1,0 +1,229 @@
+HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Sun, 08 Feb 2015 19:51:55 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 10027
+Status: 200 OK
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 57
+X-RateLimit-Reset: 1423428640
+Cache-Control: public, max-age=60, s-maxage=60
+Last-Modified: Sun, 08 Feb 2015 19:37:24 GMT
+ETag: "c2e96363465b72c8f3e51f74e23c2c23"
+Vary: Accept
+X-GitHub-Media-Type: github.v3
+Link: <https://api.github.com/repositories/1828795/contributors?per_page=10&page=2>; rel="next", <https://api.github.com/repositories/1828795/contributors?per_page=10&page=23>; rel="last"
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: deny
+Content-Security-Policy: default-src 'none'
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+Access-Control-Allow-Origin: *
+X-GitHub-Request-Id: 5AE03F43:2BEE:1571FA7A:54D7BE5B
+Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+X-Content-Type-Options: nosniff
+Vary: Accept-Encoding
+X-Served-By: 13d09b732ebe76f892093130dc088652
+
+[
+  {
+    "login": "mattt",
+    "id": 7659,
+    "avatar_url": "https://avatars.githubusercontent.com/u/7659?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/mattt",
+    "html_url": "https://github.com/mattt",
+    "followers_url": "https://api.github.com/users/mattt/followers",
+    "following_url": "https://api.github.com/users/mattt/following{/other_user}",
+    "gists_url": "https://api.github.com/users/mattt/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/mattt/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/mattt/subscriptions",
+    "organizations_url": "https://api.github.com/users/mattt/orgs",
+    "repos_url": "https://api.github.com/users/mattt/repos",
+    "events_url": "https://api.github.com/users/mattt/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/mattt/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 1564
+  },
+  {
+    "login": "kylef",
+    "id": 44164,
+    "avatar_url": "https://avatars.githubusercontent.com/u/44164?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/kylef",
+    "html_url": "https://github.com/kylef",
+    "followers_url": "https://api.github.com/users/kylef/followers",
+    "following_url": "https://api.github.com/users/kylef/following{/other_user}",
+    "gists_url": "https://api.github.com/users/kylef/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/kylef/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/kylef/subscriptions",
+    "organizations_url": "https://api.github.com/users/kylef/orgs",
+    "repos_url": "https://api.github.com/users/kylef/repos",
+    "events_url": "https://api.github.com/users/kylef/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/kylef/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 43
+  },
+  {
+    "login": "OliverLetterer",
+    "id": 688377,
+    "avatar_url": "https://avatars.githubusercontent.com/u/688377?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/OliverLetterer",
+    "html_url": "https://github.com/OliverLetterer",
+    "followers_url": "https://api.github.com/users/OliverLetterer/followers",
+    "following_url": "https://api.github.com/users/OliverLetterer/following{/other_user}",
+    "gists_url": "https://api.github.com/users/OliverLetterer/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/OliverLetterer/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/OliverLetterer/subscriptions",
+    "organizations_url": "https://api.github.com/users/OliverLetterer/orgs",
+    "repos_url": "https://api.github.com/users/OliverLetterer/repos",
+    "events_url": "https://api.github.com/users/OliverLetterer/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/OliverLetterer/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 40
+  },
+  {
+    "login": "kcharwood",
+    "id": 198768,
+    "avatar_url": "https://avatars.githubusercontent.com/u/198768?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/kcharwood",
+    "html_url": "https://github.com/kcharwood",
+    "followers_url": "https://api.github.com/users/kcharwood/followers",
+    "following_url": "https://api.github.com/users/kcharwood/following{/other_user}",
+    "gists_url": "https://api.github.com/users/kcharwood/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/kcharwood/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/kcharwood/subscriptions",
+    "organizations_url": "https://api.github.com/users/kcharwood/orgs",
+    "repos_url": "https://api.github.com/users/kcharwood/repos",
+    "events_url": "https://api.github.com/users/kcharwood/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/kcharwood/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 35
+  },
+  {
+    "login": "blakewatters",
+    "id": 8392,
+    "avatar_url": "https://avatars.githubusercontent.com/u/8392?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/blakewatters",
+    "html_url": "https://github.com/blakewatters",
+    "followers_url": "https://api.github.com/users/blakewatters/followers",
+    "following_url": "https://api.github.com/users/blakewatters/following{/other_user}",
+    "gists_url": "https://api.github.com/users/blakewatters/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/blakewatters/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/blakewatters/subscriptions",
+    "organizations_url": "https://api.github.com/users/blakewatters/orgs",
+    "repos_url": "https://api.github.com/users/blakewatters/repos",
+    "events_url": "https://api.github.com/users/blakewatters/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/blakewatters/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 31
+  },
+  {
+    "login": "steipete",
+    "id": 58493,
+    "avatar_url": "https://avatars.githubusercontent.com/u/58493?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/steipete",
+    "html_url": "https://github.com/steipete",
+    "followers_url": "https://api.github.com/users/steipete/followers",
+    "following_url": "https://api.github.com/users/steipete/following{/other_user}",
+    "gists_url": "https://api.github.com/users/steipete/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/steipete/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/steipete/subscriptions",
+    "organizations_url": "https://api.github.com/users/steipete/orgs",
+    "repos_url": "https://api.github.com/users/steipete/repos",
+    "events_url": "https://api.github.com/users/steipete/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/steipete/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 23
+  },
+  {
+    "login": "tewha",
+    "id": 108106,
+    "avatar_url": "https://avatars.githubusercontent.com/u/108106?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/tewha",
+    "html_url": "https://github.com/tewha",
+    "followers_url": "https://api.github.com/users/tewha/followers",
+    "following_url": "https://api.github.com/users/tewha/following{/other_user}",
+    "gists_url": "https://api.github.com/users/tewha/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/tewha/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/tewha/subscriptions",
+    "organizations_url": "https://api.github.com/users/tewha/orgs",
+    "repos_url": "https://api.github.com/users/tewha/repos",
+    "events_url": "https://api.github.com/users/tewha/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/tewha/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 19
+  },
+  {
+    "login": "carsonmcdonald",
+    "id": 76552,
+    "avatar_url": "https://avatars.githubusercontent.com/u/76552?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/carsonmcdonald",
+    "html_url": "https://github.com/carsonmcdonald",
+    "followers_url": "https://api.github.com/users/carsonmcdonald/followers",
+    "following_url": "https://api.github.com/users/carsonmcdonald/following{/other_user}",
+    "gists_url": "https://api.github.com/users/carsonmcdonald/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/carsonmcdonald/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/carsonmcdonald/subscriptions",
+    "organizations_url": "https://api.github.com/users/carsonmcdonald/orgs",
+    "repos_url": "https://api.github.com/users/carsonmcdonald/repos",
+    "events_url": "https://api.github.com/users/carsonmcdonald/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/carsonmcdonald/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 17
+  },
+  {
+    "login": "orj",
+    "id": 34415,
+    "avatar_url": "https://avatars.githubusercontent.com/u/34415?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/orj",
+    "html_url": "https://github.com/orj",
+    "followers_url": "https://api.github.com/users/orj/followers",
+    "following_url": "https://api.github.com/users/orj/following{/other_user}",
+    "gists_url": "https://api.github.com/users/orj/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/orj/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/orj/subscriptions",
+    "organizations_url": "https://api.github.com/users/orj/orgs",
+    "repos_url": "https://api.github.com/users/orj/repos",
+    "events_url": "https://api.github.com/users/orj/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/orj/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 15
+  },
+  {
+    "login": "0xced",
+    "id": 51363,
+    "avatar_url": "https://avatars.githubusercontent.com/u/51363?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/0xced",
+    "html_url": "https://github.com/0xced",
+    "followers_url": "https://api.github.com/users/0xced/followers",
+    "following_url": "https://api.github.com/users/0xced/following{/other_user}",
+    "gists_url": "https://api.github.com/users/0xced/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/0xced/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/0xced/subscriptions",
+    "organizations_url": "https://api.github.com/users/0xced/orgs",
+    "repos_url": "https://api.github.com/users/0xced/repos",
+    "events_url": "https://api.github.com/users/0xced/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/0xced/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 13
+  }
+]

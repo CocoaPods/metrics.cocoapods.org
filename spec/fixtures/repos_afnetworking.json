@@ -1,28 +1,28 @@
 HTTP/1.1 200 OK
 Server: GitHub.com
-Date: Mon, 29 Dec 2014 22:58:31 GMT
+Date: Sun, 08 Feb 2015 19:56:37 GMT
 Content-Type: application/json; charset=utf-8
+Content-Length: 6445
 Status: 200 OK
 X-RateLimit-Limit: 60
-X-RateLimit-Remaining: 55
-X-RateLimit-Reset: 1419897277
+X-RateLimit-Remaining: 52
+X-RateLimit-Reset: 1423428640
 Cache-Control: public, max-age=60, s-maxage=60
-Last-Modified: Mon, 29 Dec 2014 22:21:39 GMT
-ETag: "4927c7814734c53ba312ff2912061445"
+Last-Modified: Sun, 08 Feb 2015 19:37:24 GMT
+ETag: "c42cc928522bd890df57602f1cac53b3"
 Vary: Accept
 X-GitHub-Media-Type: github.v3
 X-XSS-Protection: 1; mode=block
 X-Frame-Options: deny
 Content-Security-Policy: default-src 'none'
-Content-Length: 6445
 Access-Control-Allow-Credentials: true
 Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
 Access-Control-Allow-Origin: *
-X-GitHub-Request-Id: 5AE03F43:2FD2:9569C1C:54A1DC96
+X-GitHub-Request-Id: 5AE03F43:72C9:1C17D387:54D7BF75
 Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
 X-Content-Type-Options: nosniff
 Vary: Accept-Encoding
-X-Served-By: 2811da37fbdda4367181b328b22b2499
+X-Served-By: 139317cebd6caf9cd03889139437f00b
 
 {
   "id": 1828795,
@@ -88,27 +88,27 @@ X-Served-By: 2811da37fbdda4367181b328b22b2499
   "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/labels{/name}",
   "releases_url": "https://api.github.com/repos/AFNetworking/AFNetworking/releases{/id}",
   "created_at": "2011-05-31T21:28:44Z",
-  "updated_at": "2014-12-29T22:21:39Z",
-  "pushed_at": "2014-12-21T23:02:40Z",
+  "updated_at": "2015-02-08T19:37:24Z",
+  "pushed_at": "2015-01-29T15:55:11Z",
   "git_url": "git://github.com/AFNetworking/AFNetworking.git",
   "ssh_url": "git@github.com:AFNetworking/AFNetworking.git",
   "clone_url": "https://github.com/AFNetworking/AFNetworking.git",
   "svn_url": "https://github.com/AFNetworking/AFNetworking",
   "homepage": "http://afnetworking.com",
-  "size": 14390,
-  "stargazers_count": 15084,
-  "watchers_count": 15084,
+  "size": 14726,
+  "stargazers_count": 15721,
+  "watchers_count": 15721,
   "language": "Objective-C",
   "has_issues": true,
   "has_downloads": true,
   "has_wiki": true,
   "has_pages": false,
-  "forks_count": 4265,
+  "forks_count": 4483,
   "mirror_url": null,
-  "open_issues_count": 20,
-  "forks": 4265,
-  "open_issues": 20,
-  "watchers": 15084,
+  "open_issues_count": 29,
+  "forks": 4483,
+  "open_issues": 29,
+  "watchers": 15721,
   "default_branch": "master",
   "organization": {
     "login": "AFNetworking",
@@ -129,6 +129,6 @@ X-Served-By: 2811da37fbdda4367181b328b22b2499
     "type": "Organization",
     "site_admin": false
   },
-  "network_count": 4265,
-  "subscribers_count": 1243
+  "network_count": 4483,
+  "subscribers_count": 1261
 }

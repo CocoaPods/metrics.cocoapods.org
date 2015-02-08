@@ -37,10 +37,16 @@ module Metrics
     def self.update(pods)
       pods.each do |pod|
         Metrics::Github.new.update(pod)
-        sleep 1
       end
     rescue StandardError
       sleep 10
+    rescue RateLimitError => e
+      if e.resets_at
+        sleep_time = (e.resets_at - Time.now.to_i) + 10
+        sleep sleep_time
+      else
+        sleep 4000
+      end
     end
 
     # Instruct updater to re-evaluate pod.
