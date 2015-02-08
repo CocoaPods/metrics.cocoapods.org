@@ -38,4 +38,5 @@ group :test do
   gem 'prettybacon'
   gem 'rack-test'
   gem 'rubocop'
+  gem 'webmock'
 end
