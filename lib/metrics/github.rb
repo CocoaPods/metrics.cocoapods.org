@@ -2,9 +2,21 @@ require 'github_api'
 
 module Metrics
   class Github
+    ITEMS_PER_PAGE = 10
+
     attr_reader :user, :repo
 
     class ParseError < StandardError; end
+    class RateLimitError < StandardError
+      attr_reader :resets_at, :limit
+
+      def initialize(limit, resets_at)
+        super('Rate Limit exceeded')
+
+        @limit = limit
+        @resets_at = resets_at
+      end
+    end
 
     def initialize_client(url)
       @user, @repo = parse url
@@ -26,12 +38,10 @@ module Metrics
         client = initialize_client(url)
 
         repo = client.repos.find
-
+        check_rate_limiting(repo)
         GithubPodMetrics.update_or_create({ :pod_id => pod.id }, update_hash(client, repo))
 
         reset_not_found(pod)
-
-        sleep 1
       else
         # Not having a Github URL counts as not found in the Github context.
         #
@@ -48,9 +58,9 @@ module Metrics
         :subscribers => repo.subscribers_count,
         :stargazers => repo.stargazers_count,
         :forks => repo.forks_count,
-        :contributors => client.repos.contributors.size,
+        :contributors => total_count_of(:contributors, client),
         :open_issues => repo.open_issues_count,
-        :open_pull_requests => client.pull_requests.all.size,
+        :open_pull_requests => total_count_of(:open_pull_requests, client),
         :language => repo.language
       }
     end
@@ -61,10 +71,17 @@ module Metrics
       when /404 Not Found/
         not_found(pod)
       when /403 API rate limit exceeded/
-        sleep 4000 # Wait until the rate limit is over.
+        headers = ::Github::Response::Headers.new response_headers: e.http_headers
+
+        raise build_rate_limit_error(headers)
       else
         raise
       end
+    end
+
+    def check_rate_limiting(response)
+      remaining = response.headers.ratelimit_remaining
+      raise build_rate_limit_error(response.headers) if remaining.nil? || remaining.to_i <= 0
     end
 
     # Adds 1 to a GithubPodMetrics model's not found attribute.
@@ -88,6 +105,34 @@ module Metrics
     end
 
     private
+
+    def total_count_of(collection, client)
+      case collection
+      when :contributors
+        result = client.repos.contributors(:per_page => ITEMS_PER_PAGE)
+      when :open_pull_requests
+        result = client.pull_requests.all(:state => 'open',
+                                          :per_page => ITEMS_PER_PAGE)
+      else
+        raise 'Unsupported collection'
+      end
+
+      # Stop early if the first page contained all items
+      return result.size if result.size < ITEMS_PER_PAGE
+      page_count = result.count_pages
+
+      last = result.last_page
+
+      ITEMS_PER_PAGE * (page_count - 1) + last.size
+    end
+
+    def build_rate_limit_error(headers)
+      resets_at = headers.ratelimit_reset.to_i
+      limit = headers.ratelimit_limit.to_i
+
+      resets_at = Time.now.to_i + 4000 if resets_at == 0
+      raise RateLimitError.new(limit, resets_at)
+    end
 
     # Takes a URL like
     #   https://github.com/lakesoft/LKAssetsLibrary.git

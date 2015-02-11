@@ -1,0 +1,129 @@
+HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Sun, 08 Feb 2015 19:52:44 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 5120
+Status: 200 OK
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 56
+X-RateLimit-Reset: 1423428640
+Cache-Control: public, max-age=60, s-maxage=60
+Last-Modified: Sun, 08 Feb 2015 19:37:24 GMT
+ETag: "9005d3d3a182ff3bb44961e01e2c7d87"
+Vary: Accept
+X-GitHub-Media-Type: github.v3
+Link: <https://api.github.com/repositories/1828795/contributors?per_page=10&page=1>; rel="first", <https://api.github.com/repositories/1828795/contributors?per_page=10&page=22>; rel="prev"
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: deny
+Content-Security-Policy: default-src 'none'
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+Access-Control-Allow-Origin: *
+X-GitHub-Request-Id: 5AE03F43:72C9:1C162F7E:54D7BE8B
+Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+X-Content-Type-Options: nosniff
+Vary: Accept-Encoding
+X-Served-By: a30e6f9aa7cf5731b87dfb3b9992202d
+
+[
+  {
+    "login": "modocache",
+    "id": 552921,
+    "avatar_url": "https://avatars.githubusercontent.com/u/552921?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/modocache",
+    "html_url": "https://github.com/modocache",
+    "followers_url": "https://api.github.com/users/modocache/followers",
+    "following_url": "https://api.github.com/users/modocache/following{/other_user}",
+    "gists_url": "https://api.github.com/users/modocache/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/modocache/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/modocache/subscriptions",
+    "organizations_url": "https://api.github.com/users/modocache/orgs",
+    "repos_url": "https://api.github.com/users/modocache/repos",
+    "events_url": "https://api.github.com/users/modocache/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/modocache/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 1
+  },
+  {
+    "login": "sevntine",
+    "id": 5863739,
+    "avatar_url": "https://avatars.githubusercontent.com/u/5863739?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/sevntine",
+    "html_url": "https://github.com/sevntine",
+    "followers_url": "https://api.github.com/users/sevntine/followers",
+    "following_url": "https://api.github.com/users/sevntine/following{/other_user}",
+    "gists_url": "https://api.github.com/users/sevntine/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/sevntine/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/sevntine/subscriptions",
+    "organizations_url": "https://api.github.com/users/sevntine/orgs",
+    "repos_url": "https://api.github.com/users/sevntine/repos",
+    "events_url": "https://api.github.com/users/sevntine/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/sevntine/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 1
+  },
+  {
+    "login": "tomasandrlemineus",
+    "id": 5120467,
+    "avatar_url": "https://avatars.githubusercontent.com/u/5120467?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/tomasandrlemineus",
+    "html_url": "https://github.com/tomasandrlemineus",
+    "followers_url": "https://api.github.com/users/tomasandrlemineus/followers",
+    "following_url": "https://api.github.com/users/tomasandrlemineus/following{/other_user}",
+    "gists_url": "https://api.github.com/users/tomasandrlemineus/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/tomasandrlemineus/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/tomasandrlemineus/subscriptions",
+    "organizations_url": "https://api.github.com/users/tomasandrlemineus/orgs",
+    "repos_url": "https://api.github.com/users/tomasandrlemineus/repos",
+    "events_url": "https://api.github.com/users/tomasandrlemineus/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/tomasandrlemineus/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 1
+  },
+  {
+    "login": "xjdrew",
+    "id": 1454565,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1454565?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/xjdrew",
+    "html_url": "https://github.com/xjdrew",
+    "followers_url": "https://api.github.com/users/xjdrew/followers",
+    "following_url": "https://api.github.com/users/xjdrew/following{/other_user}",
+    "gists_url": "https://api.github.com/users/xjdrew/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/xjdrew/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/xjdrew/subscriptions",
+    "organizations_url": "https://api.github.com/users/xjdrew/orgs",
+    "repos_url": "https://api.github.com/users/xjdrew/repos",
+    "events_url": "https://api.github.com/users/xjdrew/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/xjdrew/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 1
+  },
+  {
+    "login": "MarrLiss",
+    "id": 412118,
+    "avatar_url": "https://avatars.githubusercontent.com/u/412118?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/MarrLiss",
+    "html_url": "https://github.com/MarrLiss",
+    "followers_url": "https://api.github.com/users/MarrLiss/followers",
+    "following_url": "https://api.github.com/users/MarrLiss/following{/other_user}",
+    "gists_url": "https://api.github.com/users/MarrLiss/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/MarrLiss/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/MarrLiss/subscriptions",
+    "organizations_url": "https://api.github.com/users/MarrLiss/orgs",
+    "repos_url": "https://api.github.com/users/MarrLiss/repos",
+    "events_url": "https://api.github.com/users/MarrLiss/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/MarrLiss/received_events",
+    "type": "User",
+    "site_admin": false,
+    "contributions": 1
+  }
+]

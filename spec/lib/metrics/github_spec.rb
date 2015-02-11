@@ -129,4 +129,54 @@ describe Metrics::Github do
     end
   end
 
+  describe '.update' do
+    def stub_request_with_fixture(fixture, url)
+      fixture_path = File.expand_path("../../../fixtures/#{fixture}.json", __FILE__)
+      response = File.read(fixture_path)
+      stub_request(:get, url)
+        .to_return(response)
+    end
+
+    before do
+      @pod = Pod.create(:name => 'AFNetworking')
+      GithubPodMetrics.create(:pod => @pod)
+      @pod.expects(:github_url).returns('https://github.com/AFNetworking/AFNetworking')
+
+      @github = Metrics::Github.new
+    end
+
+    it 'raises RateLimitError when rate limiting is in effect' do
+      stub_request_with_fixture('repos_afnetworking_rate_limit',
+                                'https://api.github.com/repos/AFNetworking/AFNetworking')
+
+      should.raise(Metrics::Github::RateLimitError) { @github.update(@pod) }
+    end
+
+    it 'updates correctly' do
+      stub_request_with_fixture('repos_afnetworking',
+                                'https://api.github.com/repos/AFNetworking/AFNetworking')
+      stub_request_with_fixture('repos_afnetworking_pulls',
+                                'https://api.github.com/repos/AFNetworking/AFNetworking/pulls?per_page=10&state=open')
+      stub_request_with_fixture('repos_afnetworking_contributors_first_page',
+                                'https://api.github.com/repos/AFNetworking/AFNetworking/contributors?per_page=10')
+      stub_request_with_fixture('repos_afnetworking_contributors_last_page',
+                                'https://api.github.com/repositories/1828795/contributors?per_page=10&page=23')
+
+      expected_result = {
+        :subscribers => 1261,
+        :stargazers => 157_21,
+        :forks => 4483,
+        :contributors => 225,
+        :open_issues => 29,
+        :open_pull_requests => 6,
+        :language => 'Objective-C'
+      }
+
+      @github.update(@pod)
+
+      result = GithubPodMetrics.find(:pod_id => @pod.id).values
+
+      expected_result.each { |key, value| result[key].should == value }
+    end
+  end
 end
