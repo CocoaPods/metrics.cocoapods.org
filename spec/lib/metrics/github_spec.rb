@@ -155,7 +155,7 @@ describe Metrics::Github do
     it 'updates correctly' do
       stub_request_with_fixture('repos_afnetworking',
                                 'https://api.github.com/repos/AFNetworking/AFNetworking')
-      stub_request_with_fixture('repos_afnetworking_pulls',
+      stub_request_with_fixture('repos_afnetworking_open_pulls',
                                 'https://api.github.com/repos/AFNetworking/AFNetworking/pulls?per_page=10&state=open')
       stub_request_with_fixture('repos_afnetworking_contributors_first_page',
                                 'https://api.github.com/repos/AFNetworking/AFNetworking/contributors?per_page=10')
