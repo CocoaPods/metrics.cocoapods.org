@@ -54,13 +54,19 @@ module Metrics
     end
 
     def update_hash(client, repo)
+      closed_issues = total_count_of(:closed_issues, client)
+      closed_pull_requests = total_count_of(:closed_pull_requests, client)
       {
         :subscribers => repo.subscribers_count,
         :stargazers => repo.stargazers_count,
         :forks => repo.forks_count,
         :contributors => total_count_of(:contributors, client),
         :open_issues => repo.open_issues_count,
+        # Because every PR is an issue we subtract the closed PRs from
+        # the closed issues count
+        :closed_issues => closed_issues - closed_pull_requests,
         :open_pull_requests => total_count_of(:open_pull_requests, client),
+        :closed_pull_requests => closed_pull_requests,
         :language => repo.language
       }
     end
@@ -113,6 +119,14 @@ module Metrics
       when :open_pull_requests
         result = client.pull_requests.all(:state => 'open',
                                           :per_page => ITEMS_PER_PAGE)
+      when :closed_pull_requests
+        result = client.pull_requests.all(:state => 'closed',
+                                          :per_page => ITEMS_PER_PAGE)
+      when :closed_issues
+        result = client.issues.list(:state => 'closed',
+                                    :per_page => ITEMS_PER_PAGE,
+                                    :user => client.user,
+                                    :repo => client.repo)
       else
         raise 'Unsupported collection'
       end

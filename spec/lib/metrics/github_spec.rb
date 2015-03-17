@@ -155,12 +155,26 @@ describe Metrics::Github do
     it 'updates correctly' do
       stub_request_with_fixture('repos_afnetworking',
                                 'https://api.github.com/repos/AFNetworking/AFNetworking')
-      stub_request_with_fixture('repos_afnetworking_pulls',
+      stub_request_with_fixture('repos_afnetworking_open_pulls',
                                 'https://api.github.com/repos/AFNetworking/AFNetworking/pulls?per_page=10&state=open')
+
+      # Contributors
       stub_request_with_fixture('repos_afnetworking_contributors_first_page',
                                 'https://api.github.com/repos/AFNetworking/AFNetworking/contributors?per_page=10')
       stub_request_with_fixture('repos_afnetworking_contributors_last_page',
                                 'https://api.github.com/repositories/1828795/contributors?per_page=10&page=23')
+
+      # Closed pull request
+      stub_request_with_fixture('repos_afnetworking_closed_pulls_first_page',
+                                'https://api.github.com/repos/AFNetworking/AFNetworking/pulls?per_page=10&state=closed')
+      stub_request_with_fixture('repos_afnetworking_closed_pulls_last_page',
+                                'https://api.github.com/repositories/1828795/pulls?per_page=10&state=closed&page=94')
+
+      # Closed issues
+      stub_request_with_fixture('repos_afnetworking_closed_issues_first_page',
+                                'https://api.github.com/repos/AFNetworking/AFNetworking/issues?per_page=10&state=closed')
+      stub_request_with_fixture('repos_afnetworking_closed_issues_last_page',
+                                'https://api.github.com/repositories/1828795/issues?per_page=10&state=closed&page=257')
 
       expected_result = {
         :subscribers => 1261,
@@ -168,7 +182,9 @@ describe Metrics::Github do
         :forks => 4483,
         :contributors => 225,
         :open_issues => 29,
+        :closed_issues => 1635,
         :open_pull_requests => 6,
+        :closed_pull_requests => 931,
         :language => 'Objective-C'
       }
 

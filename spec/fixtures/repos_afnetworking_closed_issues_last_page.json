@@ -1,0 +1,310 @@
+HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Mon, 16 Mar 2015 19:26:08 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 14321
+Status: 200 OK
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 44
+X-RateLimit-Reset: 1426535583
+Cache-Control: public, max-age=60, s-maxage=60
+ETag: "ee84ccb824b56e7185e8efb70302ce3c"
+Vary: Accept
+X-GitHub-Media-Type: github.v3
+Link: <https://api.github.com/repositories/1828795/issues?per_page=10&state=closed&page=1>; rel="first", <https://api.github.com/repositories/1828795/issues?per_page=10&state=closed&page=256>; rel="prev"
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: deny
+Content-Security-Policy: default-src 'none'
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+Access-Control-Allow-Origin: *
+X-GitHub-Request-Id: 5AE03F43:0968:896A8F4:55072E4F
+Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+X-Content-Type-Options: nosniff
+Vary: Accept-Encoding
+X-Served-By: 8a5c38021a5cd7cef7b8f49a296fee40
+
+[
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/6",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/6/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/6/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/6/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/pull/6",
+    "id": 1345332,
+    "number": 6,
+    "title": "imageByScalingAndCroppingImage Orientation Ratio Bug",
+    "user": {
+      "login": "bdmac",
+      "id": 47326,
+      "avatar_url": "https://avatars.githubusercontent.com/u/47326?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/bdmac",
+      "html_url": "https://github.com/bdmac",
+      "followers_url": "https://api.github.com/users/bdmac/followers",
+      "following_url": "https://api.github.com/users/bdmac/following{/other_user}",
+      "gists_url": "https://api.github.com/users/bdmac/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/bdmac/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/bdmac/subscriptions",
+      "organizations_url": "https://api.github.com/users/bdmac/orgs",
+      "repos_url": "https://api.github.com/users/bdmac/repos",
+      "events_url": "https://api.github.com/users/bdmac/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/bdmac/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2011-08-04T16:01:17Z",
+    "updated_at": "2014-09-20T22:20:35Z",
+    "closed_at": "2011-08-04T18:02:04Z",
+    "pull_request": {
+      "url": "https://api.github.com/repos/AFNetworking/AFNetworking/pulls/6",
+      "html_url": "https://github.com/AFNetworking/AFNetworking/pull/6",
+      "diff_url": "https://github.com/AFNetworking/AFNetworking/pull/6.diff",
+      "patch_url": "https://github.com/AFNetworking/AFNetworking/pull/6.patch"
+    },
+    "body": "There was a bug with the code to scale/crop an image that caused it to stretch images needlessly when they were in portrait instead of landscape orientation.  Super tiny fix as you can see..."
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/5",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/5/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/5/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/5/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/pull/5",
+    "id": 1342221,
+    "number": 5,
+    "title": "Improving the check for NSJSONSerialization.",
+    "user": {
+      "login": "jparise",
+      "id": 10311,
+      "avatar_url": "https://avatars.githubusercontent.com/u/10311?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jparise",
+      "html_url": "https://github.com/jparise",
+      "followers_url": "https://api.github.com/users/jparise/followers",
+      "following_url": "https://api.github.com/users/jparise/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jparise/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jparise/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jparise/subscriptions",
+      "organizations_url": "https://api.github.com/users/jparise/orgs",
+      "repos_url": "https://api.github.com/users/jparise/repos",
+      "events_url": "https://api.github.com/users/jparise/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jparise/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2011-08-04T04:24:19Z",
+    "updated_at": "2014-09-20T22:20:35Z",
+    "closed_at": "2011-08-04T05:10:41Z",
+    "pull_request": {
+      "url": "https://api.github.com/repos/AFNetworking/AFNetworking/pulls/5",
+      "html_url": "https://github.com/AFNetworking/AFNetworking/pull/5",
+      "diff_url": "https://github.com/AFNetworking/AFNetworking/pull/5.diff",
+      "patch_url": "https://github.com/AFNetworking/AFNetworking/pull/5.patch"
+    },
+    "body": "We now only attempt to use NSJSONSerialization if we're compiling\r\nagainst a Base SDK that includes it.  If we are, we still retain the\r\nNS_CLASS_AVAILABLE-based `class` check to test whether or not it's\r\navailable at runtime.\r\n\r\nThe fallback in both cases is to use JSONKit."
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/4",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/4/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/4/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/4/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/pull/4",
+    "id": 1208592,
+    "number": 4,
+    "title": "AcceptableContentTypes filter ability and Debug delay feature are broken",
+    "user": {
+      "login": "jfradj",
+      "id": 452649,
+      "avatar_url": "https://avatars.githubusercontent.com/u/452649?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jfradj",
+      "html_url": "https://github.com/jfradj",
+      "followers_url": "https://api.github.com/users/jfradj/followers",
+      "following_url": "https://api.github.com/users/jfradj/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jfradj/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jfradj/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jfradj/subscriptions",
+      "organizations_url": "https://api.github.com/users/jfradj/orgs",
+      "repos_url": "https://api.github.com/users/jfradj/repos",
+      "events_url": "https://api.github.com/users/jfradj/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jfradj/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 6,
+    "created_at": "2011-07-12T13:58:49Z",
+    "updated_at": "2014-09-20T22:20:35Z",
+    "closed_at": "2011-08-03T17:13:03Z",
+    "pull_request": {
+      "url": "https://api.github.com/repos/AFNetworking/AFNetworking/pulls/4",
+      "html_url": "https://github.com/AFNetworking/AFNetworking/pull/4",
+      "diff_url": "https://github.com/AFNetworking/AFNetworking/pull/4.diff",
+      "patch_url": "https://github.com/AFNetworking/AFNetworking/pull/4.patch"
+    },
+    "body": "Bad test which is breaking acceptableContentTypes filter ability\r\n\r\nIndeed the test removed broke the acceptableContentTypes filter because it's hardly test against \"application/json\" and not on all acceptable content types already stored in the self.acceptableContentTypes var\r\n\r\n**********************************************************\r\nOverriding of the finishWithError method breaks the debug delay feature\r\n\r\nIn AFHTTPOperation.m, the overriding of the  -\r\n(void)finishWithError:(NSError *)error method don't take into account if\r\nthere is or not a debug delay."
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/3",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/3/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/3/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/3/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/pull/3",
+    "id": 1046000,
+    "number": 3,
+    "title": "Network Activity Indicator",
+    "user": {
+      "login": "sbandol",
+      "id": 480154,
+      "avatar_url": "https://avatars.githubusercontent.com/u/480154?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/sbandol",
+      "html_url": "https://github.com/sbandol",
+      "followers_url": "https://api.github.com/users/sbandol/followers",
+      "following_url": "https://api.github.com/users/sbandol/following{/other_user}",
+      "gists_url": "https://api.github.com/users/sbandol/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/sbandol/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/sbandol/subscriptions",
+      "organizations_url": "https://api.github.com/users/sbandol/orgs",
+      "repos_url": "https://api.github.com/users/sbandol/repos",
+      "events_url": "https://api.github.com/users/sbandol/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/sbandol/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2011-06-12T16:21:06Z",
+    "updated_at": "2014-09-20T22:20:35Z",
+    "closed_at": "2011-06-12T16:33:08Z",
+    "pull_request": {
+      "url": "https://api.github.com/repos/AFNetworking/AFNetworking/pulls/3",
+      "html_url": "https://github.com/AFNetworking/AFNetworking/pull/3",
+      "diff_url": "https://github.com/AFNetworking/AFNetworking/pull/3.diff",
+      "patch_url": "https://github.com/AFNetworking/AFNetworking/pull/3.patch"
+    },
+    "body": "Displaying network Activity Indicator while AFHTTPOperation is in progress.\r\n"
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/pull/2",
+    "id": 1002893,
+    "number": 2,
+    "title": "Removed (seemingly) unused _cachedRequests NSMutableSet.",
+    "user": {
+      "login": "jakemarsh",
+      "id": 119054,
+      "avatar_url": "https://avatars.githubusercontent.com/u/119054?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jakemarsh",
+      "html_url": "https://github.com/jakemarsh",
+      "followers_url": "https://api.github.com/users/jakemarsh/followers",
+      "following_url": "https://api.github.com/users/jakemarsh/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jakemarsh/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jakemarsh/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jakemarsh/subscriptions",
+      "organizations_url": "https://api.github.com/users/jakemarsh/orgs",
+      "repos_url": "https://api.github.com/users/jakemarsh/repos",
+      "events_url": "https://api.github.com/users/jakemarsh/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jakemarsh/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2011-06-04T15:44:39Z",
+    "updated_at": "2014-10-02T12:35:23Z",
+    "closed_at": "2011-06-04T16:11:32Z",
+    "pull_request": {
+      "url": "https://api.github.com/repos/AFNetworking/AFNetworking/pulls/2",
+      "html_url": "https://github.com/AFNetworking/AFNetworking/pull/2",
+      "diff_url": "https://github.com/AFNetworking/AFNetworking/pull/2.diff",
+      "patch_url": "https://github.com/AFNetworking/AFNetworking/pull/2.patch"
+    },
+    "body": "Thinking this may be an orphaned NSMutableSet. Can't seem to find any other references to it anywhere else, causing a leak right now."
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/1",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/1/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/1/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/1/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/pull/1",
+    "id": 1002885,
+    "number": 1,
+    "title": "Did I find a memory link here? Or do I need more sleep? :)",
+    "user": {
+      "login": "jakemarsh",
+      "id": 119054,
+      "avatar_url": "https://avatars.githubusercontent.com/u/119054?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jakemarsh",
+      "html_url": "https://github.com/jakemarsh",
+      "followers_url": "https://api.github.com/users/jakemarsh/followers",
+      "following_url": "https://api.github.com/users/jakemarsh/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jakemarsh/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jakemarsh/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jakemarsh/subscriptions",
+      "organizations_url": "https://api.github.com/users/jakemarsh/orgs",
+      "repos_url": "https://api.github.com/users/jakemarsh/repos",
+      "events_url": "https://api.github.com/users/jakemarsh/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jakemarsh/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 3,
+    "created_at": "2011-06-04T15:35:55Z",
+    "updated_at": "2014-09-20T22:20:35Z",
+    "closed_at": "2011-06-04T16:14:51Z",
+    "pull_request": {
+      "url": "https://api.github.com/repos/AFNetworking/AFNetworking/pulls/1",
+      "html_url": "https://github.com/AFNetworking/AFNetworking/pull/1",
+      "diff_url": "https://github.com/AFNetworking/AFNetworking/pull/1.diff",
+      "patch_url": "https://github.com/AFNetworking/AFNetworking/pull/1.patch"
+    },
+    "body": ""
+  }
+]

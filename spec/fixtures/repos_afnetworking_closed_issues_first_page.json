@@ -1,0 +1,450 @@
+HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Mon, 16 Mar 2015 19:23:43 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 26842
+Status: 200 OK
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 48
+X-RateLimit-Reset: 1426535583
+Cache-Control: public, max-age=60, s-maxage=60
+ETag: "7e9f92d80ace35b4272b88fc82908751"
+Vary: Accept
+X-GitHub-Media-Type: github.v3
+Link: <https://api.github.com/repositories/1828795/issues?per_page=10&state=closed&page=2>; rel="next", <https://api.github.com/repositories/1828795/issues?per_page=10&state=closed&page=257>; rel="last"
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: deny
+Content-Security-Policy: default-src 'none'
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+Access-Control-Allow-Origin: *
+X-GitHub-Request-Id: 5AE03F43:730C:7121B7F:55072DBF
+Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+X-Content-Type-Options: nosniff
+Vary: Accept-Encoding
+X-Served-By: 318e55760cf7cdb40e61175a4d36cd32
+
+[
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2596",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2596/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2596/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2596/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/issues/2596",
+    "id": 61264002,
+    "number": 2596,
+    "title": "Memory Leak in AFHTTPRequestOperationManager",
+    "user": {
+      "login": "CaptainStiggz",
+      "id": 704532,
+      "avatar_url": "https://avatars.githubusercontent.com/u/704532?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/CaptainStiggz",
+      "html_url": "https://github.com/CaptainStiggz",
+      "followers_url": "https://api.github.com/users/CaptainStiggz/followers",
+      "following_url": "https://api.github.com/users/CaptainStiggz/following{/other_user}",
+      "gists_url": "https://api.github.com/users/CaptainStiggz/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/CaptainStiggz/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/CaptainStiggz/subscriptions",
+      "organizations_url": "https://api.github.com/users/CaptainStiggz/orgs",
+      "repos_url": "https://api.github.com/users/CaptainStiggz/repos",
+      "events_url": "https://api.github.com/users/CaptainStiggz/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/CaptainStiggz/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 2,
+    "created_at": "2015-03-13T21:51:11Z",
+    "updated_at": "2015-03-16T19:05:34Z",
+    "closed_at": "2015-03-16T19:05:34Z",
+    "body": "I ran some tests trying to isolate a strange memory leak, and found AFHTTPRequestOperationManager to be the (most likely) offender. Here are the tests, as well as the results. In the second screenshot, the memory step-up you'll find at ~50s recurs every ~20s in perpetuity. Gun to my head, I'd hazard a guess that AFHTTPRequestOperation in the success/failure blocks might have something to do with it, but I really have no idea, as I haven't dug too deeply into the AFNetworking nuts and bolts.\r\n\r\n```objective-c\r\n//app delegate\r\n- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {\r\n    NSURL *url = [NSURL URLWithString:@\"http://myserver/path\"];\r\n    self.session = [[AFHTTPSessionManager alloc] initWithBaseURL:url];\r\n    self.manager = [AFHTTPRequestOperationManager manager];\r\n    [self syncNotifications];\r\n    return YES;\r\n}\r\n\r\n//this works (AFHTTPSessionManager)\r\n- (void)syncNotifications {\r\n    NSString *path = @\"http://myserver/path/action\";\r\n    NSLog(@\"GET: %@\", path);\r\n\r\n    [self.session GET:@\"/action\" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {\r\n        NSLog(@\"success\");\r\n    } failure:^(NSURLSessionDataTask *task, NSError *error) {\r\n        NSLog(@\"failure\");\r\n    }];\r\n\r\n    [self performSelector:@selector(syncNotifications) withObject:nil afterDelay:1];\r\n}\r\n\r\n//this leaks memory (AFHTTPRequestOperationManager)\r\n- (void)syncNotifications {\r\n    NSString *path = @\"http://myserver/path/action\";\r\n    NSLog(@\"GET: %@\", path);\r\n\r\n    [self.manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {\r\n        NSLog(@\"success\");\r\n    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {\r\n        NSLog(@\"failure\");\r\n    }];\r\n\r\n    [self performSelector:@selector(syncNotifications) withObject:nil afterDelay:1];\r\n}\r\n```\r\n\r\n![test 1 - afhttpsessionmanager](https://cloud.githubusercontent.com/assets/704532/6647767/3cf7f492-c98f-11e4-9827-5ad04af95125.png)\r\n![test 2 - afhttprequestoperationmanager](https://cloud.githubusercontent.com/assets/704532/6647768/3cf8e532-c98f-11e4-9777-77c057ccba93.png)\r\n"
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2595",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2595/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2595/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2595/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/issues/2595",
+    "id": 61221396,
+    "number": 2595,
+    "title": "AFNetworking won't build in a WatchKit Extension",
+    "user": {
+      "login": "wlisac",
+      "id": 2246764,
+      "avatar_url": "https://avatars.githubusercontent.com/u/2246764?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/wlisac",
+      "html_url": "https://github.com/wlisac",
+      "followers_url": "https://api.github.com/users/wlisac/followers",
+      "following_url": "https://api.github.com/users/wlisac/following{/other_user}",
+      "gists_url": "https://api.github.com/users/wlisac/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/wlisac/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/wlisac/subscriptions",
+      "organizations_url": "https://api.github.com/users/wlisac/orgs",
+      "repos_url": "https://api.github.com/users/wlisac/repos",
+      "events_url": "https://api.github.com/users/wlisac/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/wlisac/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 2,
+    "created_at": "2015-03-13T20:23:12Z",
+    "updated_at": "2015-03-14T01:46:34Z",
+    "closed_at": "2015-03-14T01:43:16Z",
+    "body": "AFNetworking references a couple unavailable methods when included in a WatchKit Extension.\r\n\r\n`AFNetworkActivityIndicatorManager.m` references `[UIApplication sharedApplication]`.\r\n\r\n`UIAlertView+AFNetworking.m` references `UIAlertView`'s `initWithTitle:message:delegate:cancelButtonTitle:otherButtonTitles:`\r\n\r\nThese should probably be wrapped in `#ifndef AF_APP_EXTENSIONS`."
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2594",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2594/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2594/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2594/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/issues/2594",
+    "id": 61000658,
+    "number": 2594,
+    "title": "When we add a string into get parameters, string value is changed",
+    "user": {
+      "login": "LeeKyungMoon",
+      "id": 7313411,
+      "avatar_url": "https://avatars.githubusercontent.com/u/7313411?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/LeeKyungMoon",
+      "html_url": "https://github.com/LeeKyungMoon",
+      "followers_url": "https://api.github.com/users/LeeKyungMoon/followers",
+      "following_url": "https://api.github.com/users/LeeKyungMoon/following{/other_user}",
+      "gists_url": "https://api.github.com/users/LeeKyungMoon/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/LeeKyungMoon/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/LeeKyungMoon/subscriptions",
+      "organizations_url": "https://api.github.com/users/LeeKyungMoon/orgs",
+      "repos_url": "https://api.github.com/users/LeeKyungMoon/repos",
+      "events_url": "https://api.github.com/users/LeeKyungMoon/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/LeeKyungMoon/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2015-03-13T07:03:00Z",
+    "updated_at": "2015-03-13T14:16:30Z",
+    "closed_at": "2015-03-13T14:16:30Z",
+    "body": "[manager GET:GEOCODING_URL parameters:@{@\"language\":@\"ko\",@\"latlng\":string} success:^(AFHTTPRequestOperation *operation, id responseObject) { ... }\r\n\r\nat parameters, we add @\"latlng\":string. that string is \"22.284681,114.158180\"\r\nbefore code goes into 'GET' method, log shows string is exactly \"22.284681,114.158180\" but\r\nwhen code goes into 'GET' method, it makes failture with error description which contains \"?language=ko&latlng=22.284681%2C114.158180\". the character ',' is replaced with '%2C'\r\n\r\nI don't know why please help me\r\n"
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2593",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2593/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2593/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2593/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/issues/2593",
+    "id": 60977864,
+    "number": 2593,
+    "title": "How to know MIME type of response data",
+    "user": {
+      "login": "tdquangad2",
+      "id": 9416386,
+      "avatar_url": "https://avatars.githubusercontent.com/u/9416386?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/tdquangad2",
+      "html_url": "https://github.com/tdquangad2",
+      "followers_url": "https://api.github.com/users/tdquangad2/followers",
+      "following_url": "https://api.github.com/users/tdquangad2/following{/other_user}",
+      "gists_url": "https://api.github.com/users/tdquangad2/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/tdquangad2/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/tdquangad2/subscriptions",
+      "organizations_url": "https://api.github.com/users/tdquangad2/orgs",
+      "repos_url": "https://api.github.com/users/tdquangad2/repos",
+      "events_url": "https://api.github.com/users/tdquangad2/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/tdquangad2/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2015-03-13T04:03:39Z",
+    "updated_at": "2015-03-13T14:17:51Z",
+    "closed_at": "2015-03-13T14:17:51Z",
+    "body": "I can use AFHTTPSessionManager to get response data with my url. But in success block, how to know MIME type of response data:\r\n\r\n    [manager POST:path parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {\r\n    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);\r\n    NSString *saveDirectory = [paths objectAtIndex:0];      \r\n    NSString *filePath = [saveDirectory stringByAppendingPathComponent:@\"fileName.**WHICH-MIME-HERE**\"];\r\n    NSLog(@\"%@\",filePath);\r\n    [responseObject writeToFile:filePath atomically:YES];\r\n    } failure:^(NSURLSessionDataTask *task, NSError *error) {\r\n        NSLog(@\"Error: %@\", error);\r\n    }];"
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2591",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2591/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2591/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2591/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/issues/2591",
+    "id": 60863313,
+    "number": 2591,
+    "title": "Request to make a method public in AFHTTPRequestOperationManager",
+    "user": {
+      "login": "rdoddi",
+      "id": 5091600,
+      "avatar_url": "https://avatars.githubusercontent.com/u/5091600?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/rdoddi",
+      "html_url": "https://github.com/rdoddi",
+      "followers_url": "https://api.github.com/users/rdoddi/followers",
+      "following_url": "https://api.github.com/users/rdoddi/following{/other_user}",
+      "gists_url": "https://api.github.com/users/rdoddi/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/rdoddi/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/rdoddi/subscriptions",
+      "organizations_url": "https://api.github.com/users/rdoddi/orgs",
+      "repos_url": "https://api.github.com/users/rdoddi/repos",
+      "events_url": "https://api.github.com/users/rdoddi/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/rdoddi/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2015-03-12T17:47:47Z",
+    "updated_at": "2015-03-12T20:10:50Z",
+    "closed_at": "2015-03-12T20:10:50Z",
+    "body": "It will be convenient to create and customize AFHTTPRequestOperation using following method which is declared as private. Would it be possible to make this public.\r\n\r\n// Class: AFHTTPRequestOperationManager\r\n```\r\n- (AFHTTPRequestOperation *)HTTPRequestOperationWithHTTPMethod:(NSString *)method\r\n                                                     URLString:(NSString *)URLString\r\n                                                    parameters:(id)parameters\r\n                                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success\r\n                                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;\r\n```"
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2589",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2589/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2589/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2589/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/pull/2589",
+    "id": 60683743,
+    "number": 2589,
+    "title": "Guard for unsupported features of iOS 8 extensions",
+    "user": {
+      "login": "phylor",
+      "id": 1394828,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1394828?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/phylor",
+      "html_url": "https://github.com/phylor",
+      "followers_url": "https://api.github.com/users/phylor/followers",
+      "following_url": "https://api.github.com/users/phylor/following{/other_user}",
+      "gists_url": "https://api.github.com/users/phylor/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/phylor/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/phylor/subscriptions",
+      "organizations_url": "https://api.github.com/users/phylor/orgs",
+      "repos_url": "https://api.github.com/users/phylor/repos",
+      "events_url": "https://api.github.com/users/phylor/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/phylor/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2015-03-11T16:13:31Z",
+    "updated_at": "2015-03-14T01:43:06Z",
+    "closed_at": "2015-03-14T01:42:49Z",
+    "pull_request": {
+      "url": "https://api.github.com/repos/AFNetworking/AFNetworking/pulls/2589",
+      "html_url": "https://github.com/AFNetworking/AFNetworking/pull/2589",
+      "diff_url": "https://github.com/AFNetworking/AFNetworking/pull/2589.diff",
+      "patch_url": "https://github.com/AFNetworking/AFNetworking/pull/2589.patch"
+    },
+    "body": "See Issue #2119.\r\n\r\nIt seems that a couple of references to unsupported APIs in extensions were missed. I'd really appreciate a fix because I can't properly build my extension at the moment.\r\n\r\nCredit goes to @jpmhouston."
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2588",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2588/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2588/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2588/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/issues/2588",
+    "id": 60610819,
+    "number": 2588,
+    "title": "Request specific response serializer using AFHTTPSessionManager API",
+    "user": {
+      "login": "rdoddi",
+      "id": 5091600,
+      "avatar_url": "https://avatars.githubusercontent.com/u/5091600?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/rdoddi",
+      "html_url": "https://github.com/rdoddi",
+      "followers_url": "https://api.github.com/users/rdoddi/followers",
+      "following_url": "https://api.github.com/users/rdoddi/following{/other_user}",
+      "gists_url": "https://api.github.com/users/rdoddi/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/rdoddi/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/rdoddi/subscriptions",
+      "organizations_url": "https://api.github.com/users/rdoddi/orgs",
+      "repos_url": "https://api.github.com/users/rdoddi/repos",
+      "events_url": "https://api.github.com/users/rdoddi/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/rdoddi/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 2,
+    "created_at": "2015-03-11T05:01:01Z",
+    "updated_at": "2015-03-12T02:48:18Z",
+    "closed_at": "2015-03-11T15:50:56Z",
+    "body": "Old AFNetworking AFHTTPRequestOperation has request instance specific response serializer - this is very convenient while parsing different types of payloads (e.g. one from /photos another from photos/123).\r\n\r\nUsing newer version of AFHTTPSessionManager this is not possible. We can only set global serializer or compound serializer but not request specific serializer.\r\n\r\nIs there a plan to accommodate this in near future."
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2587",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2587/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2587/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2587/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/pull/2587",
+    "id": 60199288,
+    "number": 2587,
+    "title": "Fixed an issue!",
+    "user": {
+      "login": "voznesenskym",
+      "id": 4755252,
+      "avatar_url": "https://avatars.githubusercontent.com/u/4755252?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/voznesenskym",
+      "html_url": "https://github.com/voznesenskym",
+      "followers_url": "https://api.github.com/users/voznesenskym/followers",
+      "following_url": "https://api.github.com/users/voznesenskym/following{/other_user}",
+      "gists_url": "https://api.github.com/users/voznesenskym/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/voznesenskym/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/voznesenskym/subscriptions",
+      "organizations_url": "https://api.github.com/users/voznesenskym/orgs",
+      "repos_url": "https://api.github.com/users/voznesenskym/repos",
+      "events_url": "https://api.github.com/users/voznesenskym/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/voznesenskym/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2015-03-07T09:32:02Z",
+    "updated_at": "2015-03-07T09:32:35Z",
+    "closed_at": "2015-03-07T09:32:35Z",
+    "pull_request": {
+      "url": "https://api.github.com/repos/AFNetworking/AFNetworking/pulls/2587",
+      "html_url": "https://github.com/AFNetworking/AFNetworking/pull/2587",
+      "diff_url": "https://github.com/AFNetworking/AFNetworking/pull/2587.diff",
+      "patch_url": "https://github.com/AFNetworking/AFNetworking/pull/2587.patch"
+    },
+    "body": "Stuff! And things! Open Source - yeah!!!"
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2586",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2586/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2586/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2586/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/issues/2586",
+    "id": 60076859,
+    "number": 2586,
+    "title": "UIImageView as sub view of a UITableViewCell when reused.",
+    "user": {
+      "login": "heistings",
+      "id": 7497100,
+      "avatar_url": "https://avatars.githubusercontent.com/u/7497100?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/heistings",
+      "html_url": "https://github.com/heistings",
+      "followers_url": "https://api.github.com/users/heistings/followers",
+      "following_url": "https://api.github.com/users/heistings/following{/other_user}",
+      "gists_url": "https://api.github.com/users/heistings/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/heistings/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/heistings/subscriptions",
+      "organizations_url": "https://api.github.com/users/heistings/orgs",
+      "repos_url": "https://api.github.com/users/heistings/repos",
+      "events_url": "https://api.github.com/users/heistings/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/heistings/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 2,
+    "created_at": "2015-03-06T09:12:34Z",
+    "updated_at": "2015-03-09T03:01:49Z",
+    "closed_at": "2015-03-06T14:29:51Z",
+    "body": "I'm reading code for learning, and I see the code blow in `setImageWithURLRequest:placeholderImage:success:failure:` method:\r\n\r\n```objective-c\r\n        if (placeholderImage) {\r\n            self.image = placeholderImage;\r\n        }\r\n```\r\n\r\nI think this may not work fine when I use `- (void)setImageWithURL:(NSURL *)url;` when the UIImageView as a sub view as a reusable UITableView cell. The image which was set last time is still there until current image downloading is finished. "
+  },
+  {
+    "url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2585",
+    "labels_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2585/labels{/name}",
+    "comments_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2585/comments",
+    "events_url": "https://api.github.com/repos/AFNetworking/AFNetworking/issues/2585/events",
+    "html_url": "https://github.com/AFNetworking/AFNetworking/issues/2585",
+    "id": 60065264,
+    "number": 2585,
+    "title": "Add  `UIImageView *imageView` parameter to the success block in UIKit+AFN",
+    "user": {
+      "login": "heistings",
+      "id": 7497100,
+      "avatar_url": "https://avatars.githubusercontent.com/u/7497100?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/heistings",
+      "html_url": "https://github.com/heistings",
+      "followers_url": "https://api.github.com/users/heistings/followers",
+      "following_url": "https://api.github.com/users/heistings/following{/other_user}",
+      "gists_url": "https://api.github.com/users/heistings/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/heistings/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/heistings/subscriptions",
+      "organizations_url": "https://api.github.com/users/heistings/orgs",
+      "repos_url": "https://api.github.com/users/heistings/repos",
+      "events_url": "https://api.github.com/users/heistings/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/heistings/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2015-03-06T06:32:16Z",
+    "updated_at": "2015-03-06T14:31:19Z",
+    "closed_at": "2015-03-06T14:31:19Z",
+    "body": "Why not add a `UIImageView *imageView` parameter to the success and failure block? Or I will get a retain cycle warning if I use `self.imageView` in the block.\r\n\r\nBefore: \r\n```objective-c\r\n    NSURL *url = [NSURL URLWithString:@\"http://www.addidea.com/attachments/2010/04/301_201004221155101p7dB.jpg\"];\r\n    NSURLRequest *request = [NSURLRequest requestWithURL:url];\r\n    UIImageView *imageView = self.imageView;\r\n    [self.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {\r\n        imageView.image = image;\r\n    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {\r\n        imageView.image = [UIImage imageNamed:@\"ImageDownloadFailed\"];\r\n    }];\r\n```\r\n\r\nAfter:\r\n\r\n```objective-c\r\n    NSURL *url = [NSURL URLWithString:@\"http://www.addidea.com/attachments/2010/04/301_201004221155101p7dB.jpg\"];\r\n    NSURLRequest *request = [NSURLRequest requestWithURL:url];\r\n    [self.imageView setImageWithURLRequest:request placeholderImage:nil success:^(UIImageView *imageView, NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {\r\n        imageView.image = image;\r\n    } failure:^(UIImageView *imageView, NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {\r\n        imageView.image = [UIImage imageNamed:@\"ImageDownloadFailed\"];\r\n    }];\r\n```"
+  }
+]
