@@ -56,16 +56,17 @@ module Metrics
     def update_hash(client, repo)
       closed_issues = total_count_of(:closed_issues, client)
       closed_pull_requests = total_count_of(:closed_pull_requests, client)
+      open_pull_requests = total_count_of(:open_pull_requests, client)
       {
         :subscribers => repo.subscribers_count,
         :stargazers => repo.stargazers_count,
         :forks => repo.forks_count,
         :contributors => total_count_of(:contributors, client),
-        :open_issues => repo.open_issues_count,
-        # Because every PR is an issue we subtract the closed PRs from
-        # the closed issues count
+        # Because every PR is an issue we subtract the closed/open PRs
+        # from the closed/open issues
+        :open_issues => repo.open_issues_count - open_pull_requests,
         :closed_issues => closed_issues - closed_pull_requests,
-        :open_pull_requests => total_count_of(:open_pull_requests, client),
+        :open_pull_requests => open_pull_requests,
         :closed_pull_requests => closed_pull_requests,
         :language => repo.language
       }
