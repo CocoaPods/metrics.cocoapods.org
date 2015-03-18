@@ -181,7 +181,7 @@ describe Metrics::Github do
         :stargazers => 157_21,
         :forks => 4483,
         :contributors => 225,
-        :open_issues => 29,
+        :open_issues => 23,
         :closed_issues => 1635,
         :open_pull_requests => 6,
         :closed_pull_requests => 931,
