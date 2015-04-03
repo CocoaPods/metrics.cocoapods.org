@@ -1,0 +1,67 @@
+FORMAT: 1A
+HOST: http://metrics.cocoapods.org
+
+# CocoaPods Metrics
+
+Metrics is an API to view metrics for Pods.
+
+## Status [/api/v1/status]
+
+### Retrieve the Status [GET]
+
++ Response 200 (application/json)
+
+        {
+            "github": {
+                "total": 8949,
+                "complete": 7961,
+                "not_found": 988
+            },
+            "cocoadocs": {
+                "total": 8121
+            }
+        }
+
+## Metrics [/api/v1/pods/{name}]
+
++ Parameters
+    + name (required, string, `QueryKit`) ... The name of the Pod
+
+### Retrieve the Metrics for a Pod [GET]
+
++ Response 200 (application/json)
+
+        {
+            "github": {
+                "subscribers": 29,
+                "stargazers": 823,
+                "forks": 36,
+                "contributors": 5,
+                "open_issues": 1,
+                "open_pull_requests": 1,
+                "created_at": "2014-06-20 06:27:17 UTC",
+                "updated_at": "2015-03-28 04:03:03 UTC",
+                "language": "Objective-C",
+                "closed_issues": 12,
+                "closed_pull_requests": 11
+            },
+            "cocoadocs": {
+                "download_size": 464,
+                "total_files": 11,
+                "total_comments": 292,
+                "total_lines_of_code": 828,
+                "doc_percent": 89,
+                "readme_complexity": 74,
+                "initial_commit_date": "2015-01-29 17:09:31 UTC",
+                "rendered_readme_url": "http://cocoadocs.org/docsets/QueryKit/0.9.1/README.html",
+                "created_at": "2015-01-13 09:20:05 UTC",
+                "updated_at": "2015-03-21 01:55:01 UTC",
+                "license_short_name": "BSD",
+                "license_canonical_url": "https://en.wikipedia.org/wiki/BSD_licenses",
+                "total_test_expectations": 105,
+                "notability": 0,
+                "dominant_language": "Objective C",
+                "quality_estimate" :57
+            }
+        }
+
