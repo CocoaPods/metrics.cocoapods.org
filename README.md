@@ -16,6 +16,3 @@ Metrics calculations & Metrics API for CocoaPods.
 2. You can now run the tests using:
 
 		$ bundle exec rake spec
-
-
-[1]: https://github.com/CocoaPods/trunk.cocoapods.org
