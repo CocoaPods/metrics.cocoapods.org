@@ -1,6 +1,8 @@
 metrics.cocoapods.org
 =====================
 
+[![Apiary Documentation](https://img.shields.io/badge/Apiary-Documented-blue.svg)](http://docs.cocoapodsmetrics.apiary.io/)
+
 Metrics calculations & Metrics API for CocoaPods.
 
 ## Installation
