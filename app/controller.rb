@@ -49,11 +49,14 @@ class MetricsApp < Sinatra::Base
       if pod
         github_metrics = pod.github_pod_metrics
         cocoadocs_metrics = pod.cocoadocs_pod_metrics
-        if github_metrics || cocoadocs_metrics
+        stats_metrics = pod.stats_metrics
+
+        if github_metrics || cocoadocs_metrics || stats_metrics
           json_message(
             200,
             :github => sanitize_metrics(github_metrics, params[:debug]),
             :cocoadocs => sanitize_metrics(cocoadocs_metrics, params[:debug]),
+            :stats => sanitize_metrics(stats_metrics, params[:debug]),
           )
         end
       end
