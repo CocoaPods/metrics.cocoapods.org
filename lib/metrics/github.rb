@@ -137,6 +137,7 @@ module Metrics
       page_count = result.count_pages
 
       last = result.last_page
+      return result.size if last.nil?
 
       ITEMS_PER_PAGE * (page_count - 1) + last.size
     end
