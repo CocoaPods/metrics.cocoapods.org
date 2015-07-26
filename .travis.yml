@@ -1,0 +1,12 @@
+language: ruby
+sudo: false
+env:
+  - RACK_ENV=test
+before_install:
+  - git clone --depth 1 https://github.com/CocoaPods/Humus
+  - git clone --depth 1 https://github.com/CocoaPods/trunk.cocoapods.org
+before_script:
+  - (cd Humus && bundle exec rake db:bootstrap)
+  - (cd trunk.cocoapods.org && bundle install && bundle exec rake db:seed)
+script:
+  - bundle exec rake spec

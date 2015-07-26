@@ -1,6 +1,7 @@
 metrics.cocoapods.org
 =====================
 
+[![Build Status](http://img.shields.io/travis/CocoaPods/metrics.cocoapods.org/master.svg?style=flat)](https://travis-ci.org/CocoaPods/metrics.cocoapods.org)
 [![Apiary Documentation](https://img.shields.io/badge/Apiary-Documented-blue.svg)](http://docs.cocoapodsmetrics.apiary.io/)
 
 Metrics calculations & Metrics API for CocoaPods.
@@ -16,3 +17,4 @@ Metrics calculations & Metrics API for CocoaPods.
 2. You can now run the tests using:
 
 		$ bundle exec rake spec
+
