@@ -41,6 +41,11 @@ begin
     exec 'bundle exec kicker -c'
   end
 
+  desc 'Update metrics for a pod'
+    task :update, [:name] do |t, args|
+      exec "bundle exec ruby updater.rb #{ args[:name] }"
+  end
+
   task :default => :spec
 
   #-- Rubocop -------------------------------------------------------------------
