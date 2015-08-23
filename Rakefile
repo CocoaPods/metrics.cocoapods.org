@@ -44,6 +44,7 @@ begin
   desc 'Update metrics for a pod'
     task :update, [:name] do |t, args|
       exec "bundle exec ruby updater.rb #{ args[:name] }"
+    end
   end
 
   task :default => :spec

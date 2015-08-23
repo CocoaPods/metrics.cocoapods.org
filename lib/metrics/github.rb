@@ -99,7 +99,7 @@ module Metrics
     # Support GitHub's repo redirection feature
     #
     def check_repo_redirection(client, repo)
-      if repo.respond_to?(:message) && repo.message == "Moved Permanently"
+      if repo.respond_to?(:redirect?) && repo.redirect?
           redirect_details = REST.get(repo.url).body
           url = JSON.parse(redirect_details)["url"]
 

@@ -22,6 +22,7 @@ Metrics is an API to view metrics for Pods.
 + Attributes
     + github (GitHub Metrics)
     + cocoadocs (CocoaDoc Metrics)
+    + stats (CocoaPods Stats Metrics)
 
 ### Retrieve the Metrics for a Pod [GET]
 + Relation: metrics
@@ -49,10 +50,11 @@ Metrics is an API to view metrics for Pods.
 + closed_pull_requests: 11 (number)
 
 ### CocoaDoc Metrics
-+ total_files: 11 (number)
-+ total_comments: 292 (number)
-+ total_lines_of_code: 828 (number)
-+ doc_percent: 89 (number)
++ install_size: 123 (number)
++ total_files: 130 (number)
++ total_comments: 10_297 (number)
++ total_lines_of_code: 27_637 (number)
++ doc_percent: 71 (number)
 + readme_complexity: 74 (number)
 + initial_commit_date: `2015-01-29 17:09:31 UTC`
 + rendered_readme_url: `http://cocoadocs.org/docsets/QueryKit/0.9.1/README.html`
@@ -61,6 +63,28 @@ Metrics is an API to view metrics for Pods.
 + license_short_name: BSD
 + license_canonical_url: `https://en.wikipedia.org/wiki/BSD_licenses`
 + total_test_expectations: 105 (number)
-+ notability: 0 (number)
-+ dominant_language: Objective C
-+ quality_estimate: 57 (number)
++ dominant_language: "Objective C"
++ quality_estimate: 81
++ builds_independently: true
++ is_vendored_framework: nil
++ rendered_changelog_url: "http://cocoadocs.org/docsets/Expecta/1.0.2/CHANGELOG.html",
++ rendered_summary: a string
+
+### CocoaPods Stats Metrics
+
++ download_total:  17827 (number)
++ download_week:  5186 (number)
++ download_month:  17616 (number)
++ app_total:  28 (number)
++ app_week:  3 (number)
++ tests_total:  721 (number)
++ tests_week:  384 (number)
++ created_at:  `2015-05-25 09:07:22 UTC`
++ updated_at:  z2015-08-17 09:46:37 UTC`
++ extension_week:  0 (number)
++ extension_total:  0 (number)
++ watch_week:  0 (number)
++ watch_total:  0 (number)
++ pod_try_week:  0 (number)
++ pod_try_total:  0 (number)
++ is_active:  true (bool)
