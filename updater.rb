@@ -2,7 +2,7 @@ require File.expand_path('../app', __FILE__)
 
 require 'lib/metrics/updater'
 
-# Default to updaing all
+# Default to updating all
 if ARGV.length == 0
   Metrics::Updater.start
 
