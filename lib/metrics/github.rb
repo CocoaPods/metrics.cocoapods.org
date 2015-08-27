@@ -1,4 +1,6 @@
 require 'github_api'
+require 'rest'
+require 'json'
 
 module Metrics
   class Github
@@ -18,13 +20,16 @@ module Metrics
       end
     end
 
-    def initialize_client(url)
+    def initialize_client_with_repo_address(url)
       @user, @repo = parse url
-
       params = {
         :user => @user,
         :repo => @repo
       }
+      github_client params
+    end
+
+    def github_client params
       if ENV['GITHUB_BOT_USER'] && ENV['GITHUB_BOT_PASS']
         params[:basic_auth] = "#{ENV['GITHUB_BOT_USER']}:#{ENV['GITHUB_BOT_PASS']}"
       end
@@ -35,9 +40,10 @@ module Metrics
     #
     def update(pod)
       if url = pod.github_url
-        client = initialize_client(url)
-
+        client = initialize_client_with_repo_address(url)
         repo = client.repos.find
+        client, repo = check_repo_redirection(client, repo)
+
         check_rate_limiting(repo)
         GithubPodMetrics.update_or_create({ :pod_id => pod.id }, update_hash(client, repo))
 
@@ -78,8 +84,7 @@ module Metrics
       when /404 Not Found/
         not_found(pod)
       when /403 API rate limit exceeded/
-        headers = ::Github::Response::Headers.new response_headers: e.http_headers
-
+        headers = ::Github::Response::Header.new response_headers: e.http_headers
         raise build_rate_limit_error(headers)
       else
         raise
@@ -89,6 +94,22 @@ module Metrics
     def check_rate_limiting(response)
       remaining = response.headers.ratelimit_remaining
       raise build_rate_limit_error(response.headers) if remaining.nil? || remaining.to_i <= 0
+    end
+
+    # Support GitHub's repo redirection feature
+    #
+    def check_repo_redirection(client, repo)
+      if repo.respond_to?(:redirect?) && repo.redirect?
+          redirect_details = REST.get(repo.url).body
+          url = JSON.parse(redirect_details)["url"]
+
+          new_repo_details = REST.get(url).body
+          url = JSON.parse(new_repo_details)["url"]
+
+          client = initialize_client_with_repo_address url
+          repo = client.repos.find
+      end
+       [client, repo]
     end
 
     # Adds 1 to a GithubPodMetrics model's not found attribute.

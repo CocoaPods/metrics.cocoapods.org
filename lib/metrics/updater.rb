@@ -38,8 +38,12 @@ module Metrics
       pods.each do |pod|
         Metrics::Github.new.update(pod)
       end
-    rescue StandardError
-      sleep 10
+    rescue StandardError => e
+      if ENV['RACK_ENV'] == 'production'
+        sleep 10
+      else
+        raise e
+      end
     rescue RateLimitError => e
       if e.resets_at
         sleep_time = (e.resets_at - Time.now.to_i) + 10
