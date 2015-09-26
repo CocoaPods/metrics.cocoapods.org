@@ -31,6 +31,13 @@ describe MetricsApp, '/api/v1/status' do
     CocoadocsPodMetrics.create(
       :pod => pod
     )
+    TotalStats.create(
+      :projects_total => 123,
+      :download_total => 321,
+      :app_total => 333,
+      :tests_total => 222,
+      :extensions_total => 111,
+    )
   end
 
   it 'returns the right amount' do
@@ -44,7 +51,14 @@ describe MetricsApp, '/api/v1/status' do
       },
       'cocoadocs' => {
         'total' => 3
-      }
+      },
+      'cocoapods' => {
+        'all_pods_linked' => 321,
+        'targets_total' => 123,
+        'all_apps_total' => 333,
+        'all_tests_total' => 222,
+        'all_extensions_total' => 111
+      },
     }
   end
 

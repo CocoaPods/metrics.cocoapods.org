@@ -3,7 +3,7 @@ require 'app/models'
 
 class MetricsApp < Sinatra::Base
   set :protection, :except => :json_csrf
-  
+
   def sanitize_metrics(metrics, debug = false)
     return unless metrics
     metrics = metrics.values.dup
@@ -30,6 +30,7 @@ class MetricsApp < Sinatra::Base
   end
 
   get '/api/v1/status' do
+    latest_pod_stats = TotalStats.last
     {
       :github => {
         :total => GithubPodMetrics.count,
@@ -38,6 +39,13 @@ class MetricsApp < Sinatra::Base
       },
       :cocoadocs => {
         :total => CocoadocsPodMetrics.count,
+      },
+      :cocoapods => {
+        :all_pods_linked => latest_pod_stats.download_total,
+        :targets_total => latest_pod_stats.projects_total,
+        :all_apps_total => latest_pod_stats.app_total,
+        :all_tests_total => latest_pod_stats.tests_total,
+        :all_extensions_total => latest_pod_stats.extensions_total,
       }
     }.to_json
   end

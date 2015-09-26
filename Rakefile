@@ -42,9 +42,8 @@ begin
   end
 
   desc 'Update metrics for a pod'
-    task :update, [:name] do |t, args|
-      exec "bundle exec ruby updater.rb #{ args[:name] }"
-    end
+  task :update, [:name] do |t, args|
+    exec "bundle exec ruby updater.rb #{ args[:name] }"
   end
 
   task :default => :spec
@@ -61,9 +60,11 @@ begin
     puts '[!] The Rubocop tasks have been disabled'
   end
 
+
 rescue SystemExit, LoadError => e
   puts "[!] The normal tasks have been disabled: #{e.message}"
 end
+
 
 #-- UI ------------------------------------------------------------------------
 
