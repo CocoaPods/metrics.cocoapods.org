@@ -79,7 +79,6 @@ module Metrics
     end
 
     def handle_update_error(e, pod)
-      METRICS_APP_LOGGER.error e
       case e.message
       when /404 Not Found/
         not_found(pod)
@@ -87,6 +86,8 @@ module Metrics
         headers = ::Github::Response::Header.new response_headers: e.http_headers
         raise build_rate_limit_error(headers)
       else
+        # Only log out when there's an unexpected error, vs expected errors
+        METRICS_APP_LOGGER.error e
         raise
       end
     end
