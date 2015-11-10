@@ -44,7 +44,7 @@ module Metrics
       else
         raise e
       end
-    rescue RateLimitError => e
+    rescue Metrics::Github::RateLimitError => e
       if e.resets_at
         sleep_time = (e.resets_at - Time.now.to_i) + 10
         sleep sleep_time if sleep_time > 0
