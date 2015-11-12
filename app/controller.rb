@@ -50,9 +50,8 @@ class MetricsApp < Sinatra::Base
     }.to_json
   end
 
-  get '/api/v1/pods/:name.?:format?' do
-    format = params[:format]
-    if !format || format == 'json'
+  ['/api/v1/pods/:name.json', '/api/v1/pods/:name'].each do |path|
+    get path do
       pod = Pod.first(:name => params[:name])
       if pod
         github_metrics = pod.github_pod_metrics
@@ -68,8 +67,8 @@ class MetricsApp < Sinatra::Base
           )
         end
       end
+      json_error(404, "No pod found with the specified name: #{params[:name]}")
     end
-    json_error(404, 'No pod found with the specified name.')
   end
 
   post "/api/v1/pods/:name/reset/#{ENV['INCOMING_TRUNK_HOOK_PATH']}" do
