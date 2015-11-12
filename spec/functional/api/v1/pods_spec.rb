@@ -149,7 +149,7 @@ describe MetricsApp, '/api/v1/pods/:name' do
     end
   end
 
-  it 'accepts a correctly parses a .json suffix' do
+  it 'correctly extracts a .json suffix' do
     @pods.each_with_index do |pod, index|
       get "/api/v1/pods/#{pod.name}.json"
       last_response.status.should == 200
