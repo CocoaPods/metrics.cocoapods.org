@@ -31,6 +31,7 @@ end
 
 group :test do
   gem 'bacon'
+  gem 'mocha', '~> 1.1.0'
   gem 'mocha-on-bacon'
   gem 'nokogiri'
   gem 'prettybacon'

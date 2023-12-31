@@ -72,9 +72,10 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
+    metaclass (0.0.4)
     minitest (5.20.0)
-    mocha (2.1.0)
-      ruby2_keywords (>= 0.0.5)
+    mocha (1.1.0)
+      metaclass (~> 0.0.1)
     mocha-on-bacon (0.2.3)
       mocha (>= 0.13.0)
     multi_json (1.15.0)
@@ -191,6 +192,7 @@ DEPENDENCIES
   github_api
   i18n
   kicker
+  mocha (~> 1.1.0)
   mocha-on-bacon
   nap
   nokogiri
