@@ -12,6 +12,8 @@ end
 
 require 'i18n'
 I18n.enforce_available_locales = false
+require 'active_support'
+require 'active_support/core_ext'
 require 'active_support/core_ext/numeric/time'
 require 'active_support/core_ext/date/calculations'
 
